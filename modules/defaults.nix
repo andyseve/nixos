@@ -133,7 +133,7 @@
     # CLI programs
     ranger
     weechat
-    unstable.neovim # load latest neovim
+    unstable.packages.neovim # load latest neovim
     bat #better cat
     taskwarrior timewarrior
     khal khard # calendars and contacts

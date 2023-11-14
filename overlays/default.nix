@@ -1,4 +1,4 @@
 [
-  (import ./channels.nix)
+  # (import ./channels.nix)
   (import ./custom.nix)
 ]

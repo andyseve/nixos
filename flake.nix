@@ -6,14 +6,21 @@
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = {self, nixpkgs, unstable}@inputs:
+  outputs = inputs @ {self, nixpkgs, unstable}:
   let
     lib = nixpkgs.lib;
     utils = import ./lib {
-      inherit nixpkgs unstable lib;
+      inherit inputs lib;
     };
     inherit (utils) host;
   in {
+    # nixpkgs.overlays = {
+    #   channels = (
+    #     final: prev: {
+    #       unstable = import inputs.unstable { system = final.system; config = final.config; };
+    #     }
+    #   );
+    # };
     nixosConfigurations = {
       geralt = host.mkHost {
         name = "geralt";

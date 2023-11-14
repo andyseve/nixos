@@ -1,8 +1,9 @@
 {
-  nixpkgs,
-  unstable,
+  inputs,
   lib,
   ...
-}: rec {
-  host = import ./host.nix { inherit nixpkgs unstable lib; };
+}:
+
+{
+  host = import ./host.nix { inherit inputs lib; };
 }
