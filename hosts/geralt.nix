@@ -9,31 +9,27 @@
   lib,
   ...
 }:
-{
+
+let
+  sys = "x86_64-linux";
+in {
   imports = [
     ../hardware-configuration.nix
     ../defaults.nix
-    # ../modules/defaults.nix
-    # ../modules/desktop.nix
-    # ../modules/sound.nix
-    # ../modules/nvidia.nix
-    # ../modules/security.nix
-    # ../modules/ssh.nix
   ];
-  sys = "x86_64-linux";
-  outputs = {
-    pkgs = import inputs.nixpkgs {
-      system = "x86_64-linux";
-      config.allowUnfree = true;
-      overlays = [
-        ( final: prev: {
-          unstable = import inputs.nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        })
-      ];
-    };
+  # type of system
+  modules.system = "x86_64-linux";
+  nixpkgs = {
+    system = sys;
+    config.allowUnfree = true;
+    overlays = [
+      ( final: prev: {
+        unstable = import inputs.unstable {
+          system = final.system;
+          config.allowUnfree = true;
+        };
+      })
+    ];
   };
   # Timezone settings
   time.timeZone = "America/New_York";

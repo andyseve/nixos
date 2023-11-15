@@ -5,6 +5,8 @@
 }:
 
 {
+  imports =  lib.lists.forEach (lib.utils.modules.listModules (toString ./modules)) (lib.debug.traceVal);
+  # imports = lib.utils.modules.listModules (toString ./modules);
   # Nix configuration
   nix = {
     # flakes

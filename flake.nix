@@ -8,21 +8,12 @@
 
   outputs = inputs @ {self, nixpkgs, unstable}:
   let
-    lib = nixpkgs.lib;
-    utils = import ./lib {
-      inherit inputs lib;
-    };
-    inherit (utils) host;
+    lib = nixpkgs.lib.extend
+      (final: prev: { utils = import ./lib {lib = final;}; });
+    mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion inputs; };
   in {
-    # nixpkgs.overlays = {
-    #   channels = (
-    #     final: prev: {
-    #       unstable = import inputs.unstable { system = final.system; config = final.config; };
-    #     }
-    #   );
-    # };
     nixosConfigurations = {
-      geralt = host.mkHost {
+      geralt = mkHost' {
         name = "geralt";
         wsl = false;
         stateVersion = "23.05";

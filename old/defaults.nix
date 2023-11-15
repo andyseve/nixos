@@ -133,7 +133,7 @@
     # CLI programs
     ranger
     weechat
-    unstable.packages.neovim # load latest neovim
+    unstable.neovim # load latest neovim
     bat #better cat
     taskwarrior timewarrior
     khal khard # calendars and contacts
@@ -186,7 +186,7 @@
     man man-pages
 
     # dotfiles
-    anish-dotfiles
+    # anish-dotfiles
   ];
 
   # Enable CUPS to print documents.

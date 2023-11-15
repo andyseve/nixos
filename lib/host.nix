@@ -1,7 +1,6 @@
 # Function definition to define hosts
 # Reads settings from ../hosts/${hostname}.nix file to generate nixosSystem object
 {
-  inputs,
   lib,
   ...
 }:
@@ -11,6 +10,7 @@
     name,
     wsl,
     stateVersion,
+    inputs,
     ...
   }:
   let
@@ -19,25 +19,18 @@
     };
   in
   lib.nixosSystem {
-    system = hostConfig.sys;
+    system = hostConfig.system;
+    specialArgs = { inherit lib inputs; };
     modules = [
-      {
-        nixpkgs =  {
-          system = "x86_64-linux";
-          config.allowUnfree = true;
-          overlays = [
-            ( final: prev: {
-              unstable = import inputs.nixpkgs-unstable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-            })
-          ];
-        };
-      }
+      { nixpkgs = hostConfig.nixpkgs; }
       ../hardware-configuration.nix
       ../defaults.nix
-      ../modules/defaults.nix
+      ../old/defaults.nix
+      ../old/desktop.nix
+      ../old/sound.nix
+      ../old/nvidia.nix
+      ../old/security.nix
+      ../old/ssh.nix
     ];
   };
 }
