@@ -164,8 +164,6 @@
     python3Packages.matplotlib
     python3Packages.scikitlearn
     python3Packages.pandas
-    python3Packages.jupyter
-    python3Packages.notebook
 
     unstable.haskellPackages.ghc
     unstable.haskellPackages.hoogle

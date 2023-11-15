@@ -2,8 +2,7 @@
 
 let
   inherit (builtins) readDir pathExists concatLists;
-  inherit (lib) hasSuffix mapAttrsToList filterAttrs;
-  # mapFilterAttrs = pred: f: attrs: filterAttrs pred (mapAttrs' f attrs);
+  inherit (lib) hasSuffix mapAttrs mapAttrsToList concatMapAttrs filterAttrs;
 in rec {
   # lists all the paths in dir
   # if a subdirectory includes "default.nix" then ignores all subdirectories and other files
@@ -18,17 +17,28 @@ in rec {
     if default == true then [ "${toString dir}/default.nix" ]
     else mapAttrsToList (name: value: "${toString dir}/${name}") files ++ concatLists (mapAttrsToList (name: value: listModules "${toString dir}/${name}") directories);
 
-  # maps a function fn on all files and directories in dir
+  # same function as above, but does not treat default.nix differently
+  listModules' = dir:
+  let 
+    # default is true if dir contents default.nix
+    contents = readDir dir;
+    directories = filterAttrs (name: value: value == "directory") contents;
+    files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents;
+  in
+    mapAttrsToList (name: value: "${toString dir}/${name}") files ++ concatLists (mapAttrsToList (name: value: listModules' "${toString dir}/${name}") directories);
+
+  # maps a function fn on all files and directories in dir and returns values as a attrset
+  # if a subdirectory contains default.nix then only function is only applied to that file.
   # example = mapModules (toString ../modules) import
-  # mapModules = dir: fn:
-  # mapFilterAttrs
-  # (n: v: v != null && !(hasPrefix "_" n))
-  # (n :v: 
-  # let path = "${toString dir}/${n}"; in
-  #   if v == "directory"
-  #   then nameValuePair n (mapModules path fn)
-  #   else if v == "regular" && n != "default.nix" && hasSuffix ".nix" n
-  #   then nameValuePair (removeSuffix ".nix" n) (fn path)
-  #   else nameValuePair "" null)
-  #   (readDir dir);
+  mapModules = fn: dir:
+  let
+    # default is true if dir contents default.nix
+    default = pathExists "${toString dir}/default.nix";
+    contents = readDir dir;
+    directories = lib.debug.traceValSeq (filterAttrs (name: value: value == "directory") contents);
+    files = lib.debug.traceValSeq (filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents);
+  in
+  if default == true then { "${toString dir}/default.nix" = (fn "${toString dir}/default.nix"); }
+  else mapAttrs (name: value: (fn "${toString dir}/${name}")) files // concatMapAttrs (name: value: mapModules fn "${toString dir}/${name}") directories;
+
 }
