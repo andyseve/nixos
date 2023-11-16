@@ -18,7 +18,13 @@ in {
     ../defaults.nix
   ];
   # type of system
-  modules.system = "x86_64-linux";
+  modules = {
+    system = "x86_64-linux";
+    hardware = {
+      nvidia.enable = true;
+      nvidia.type = "stable";
+    };
+  };
   nixpkgs = import inputs.nixpkgs {
     system = sys;
     config.allowUnfree = true;

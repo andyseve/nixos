@@ -2,13 +2,16 @@
 # Default nixos configuration file
 # Includes important nixos settings which set up the template for all of my nixos configs
 {
+  config,
   lib,
   pkgs,
   ...
 }:
 
 {
+  # import modules
   imports = (lib.utils.modules.listModules (toString ./modules));
+
   # Nix configuration
   nix = {
     # flakes
