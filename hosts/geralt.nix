@@ -20,8 +20,12 @@ in {
   # type of system
   modules = {
     system = "x86_64-linux";
+    hardware = {
+      nvidia.enable = true;
+      nvidia.type = "stable";
+    };
   };
-  nixpkgs = {
+  nixpkgs = import inputs.nixpkgs {
     system = sys;
     config.allowUnfree = true;
     overlays = [

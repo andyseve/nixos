@@ -2,6 +2,7 @@
 # Default nixos configuration file
 # Includes important nixos settings which set up the template for all of my nixos configs
 {
+  config,
   lib,
   pkgs,
   ...

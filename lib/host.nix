@@ -14,15 +14,15 @@
     ...
   }:
   let
-    hostConfig = import ../hosts/${name}.nix {
+    hostConfig = lib.debug.traceValSeq (import ../hosts/${name}.nix {
       inherit name wsl stateVersion inputs lib;
-    };
+    });
   in
   lib.nixosSystem {
-    system = hostConfig.system;
+    system = hostConfig.modules.system;
     specialArgs = { inherit lib inputs; };
     modules = [
-      { nixpkgs = hostConfig.nixpkgs; }
+      { nixpkgs = hostConfig.nixpkgs; } 
       ../hardware-configuration.nix
       ../defaults.nix
       ../old/defaults.nix
