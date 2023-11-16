@@ -1,3 +1,4 @@
+# library functions to collect information from modules folder
 { lib, ...} :
 
 let
@@ -40,5 +41,4 @@ in rec {
   in
   if default == true then { "${toString dir}/default.nix" = (fn "${toString dir}/default.nix"); }
   else mapAttrs (name: value: (fn "${toString dir}/${name}")) files // concatMapAttrs (name: value: mapModules fn "${toString dir}/${name}") directories;
-
 }
