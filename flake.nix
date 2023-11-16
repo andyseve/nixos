@@ -8,10 +8,12 @@
 
   outputs = inputs @ {self, nixpkgs, unstable}:
   let
+    x = nixpkgs.lib.debug.traceValSeq nixpkgs;
     lib = nixpkgs.lib.extend
       (final: prev: { utils = import ./lib {lib = final;}; });
-    mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion inputs; };
+    mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion; inputs = lib.debug.traceValSeq inputs; };
   in {
+    utils = lib.utils;
     nixosConfigurations = {
       geralt = mkHost' {
         name = "geralt";
