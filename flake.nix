@@ -12,7 +12,7 @@
       (final: prev: { utils = import ./lib {lib = final;}; });
     mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion inputs; };
   in {
-    # utils = lib.utils;
+    utils = lib.utils;
     nixosConfigurations = {
       geralt = mkHost' {
         name = "geralt";

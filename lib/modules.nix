@@ -35,8 +35,8 @@ in rec {
     # default is true if dir contents default.nix
     default = pathExists "${toString dir}/default.nix";
     contents = readDir dir;
-    directories = lib.debug.traceValSeq (filterAttrs (name: value: value == "directory") contents);
-    files = lib.debug.traceValSeq (filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents);
+    directories = filterAttrs (name: value: value == "directory") contents;
+    files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents;
   in
   if default == true then { "${toString dir}/default.nix" = (fn "${toString dir}/default.nix"); }
   else mapAttrs (name: value: (fn "${toString dir}/${name}")) files // concatMapAttrs (name: value: mapModules fn "${toString dir}/${name}") directories;

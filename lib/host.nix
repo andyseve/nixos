@@ -14,7 +14,7 @@
     ...
   }:
   let
-    hostConfig = lib.debug.traceValSeq (import ../hosts/${name}.nix {
+    hostConfig = (import ../hosts/${name}.nix {
       inherit name wsl stateVersion inputs lib;
     });
   in

@@ -29,7 +29,7 @@ in {
         nvidiaSettings = true;
       };
 
-      hardwware.opengl = {
+      hardware.opengl = {
         enable = true;
         driSupport = true;
         driSupport32Bit = true;
