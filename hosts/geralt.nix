@@ -18,7 +18,9 @@ in {
     ../defaults.nix
   ];
   # type of system
-  modules.system = "x86_64-linux";
+  modules = {
+    system = "x86_64-linux";
+  };
   nixpkgs = {
     system = sys;
     config.allowUnfree = true;
