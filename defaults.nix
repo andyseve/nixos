@@ -9,9 +9,7 @@
 }:
 
 {
-  # import modules
   imports = (lib.utils.modules.listModules (toString ./modules));
-
   # Nix configuration
   nix = {
     # flakes
