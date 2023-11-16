@@ -10,7 +10,7 @@
   let
     lib = nixpkgs.lib.extend
       (final: prev: { utils = import ./lib {lib = final;}; });
-    mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion; inputs = lib.debug.traceValSeq inputs; };
+    mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion inputs; };
   in {
     # utils = lib.utils;
     nixosConfigurations = {
