@@ -1,11 +1,14 @@
 {
   config,
+  options,
   lib,
   pkgs,
   ...
 }:
 
-{
+let
+  lib.utils = import ./lib { lib = lib.debug.traceSeq lib; };
+in {
   imports = (lib.utils.modules.listModules (toString ./modules));
   # Nix configuration
   nix = {

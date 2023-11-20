@@ -3,16 +3,21 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs @ {self, nixpkgs, unstable}:
-  let
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    ...
+  } @ inputs: let
     lib = nixpkgs.lib.extend
-      (final: prev: { utils = import ./lib {lib = final;}; });
+    (final: prev: { utils = import ./lib {lib = final;}; });
     mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion inputs; };
   in {
-    utils = lib.utils;
+    # output local functions defined in utils
+    lib = lib.utils;
     nixosConfigurations = {
       geralt = mkHost' {
         name = "geralt";

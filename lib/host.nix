@@ -12,17 +12,18 @@
     stateVersion,
     inputs,
     ...
-  }:
-  let
+  }: let
     hostConfig = (import ../hosts/${name}.nix {
       inherit name wsl stateVersion inputs lib;
     });
   in
   lib.nixosSystem {
     system = hostConfig.modules.system;
-    specialArgs = { inherit lib inputs; };
     modules = [
-      { nixpkgs = hostConfig.nixpkgs; } 
+      {
+        inherit lib;
+        nixpkgs = hostConfig.nixpkgs;
+      } 
       ../hardware-configuration.nix
       ../defaults.nix
       ../old/defaults.nix
