@@ -14,15 +14,39 @@
   } @ inputs: let
     lib = nixpkgs.lib.extend
     (final: prev: { utils = import ./lib {lib = final;}; });
-    mkHost' = {name, wsl, stateVersion}: lib.utils.host.mkHost { inherit name wsl stateVersion inputs; };
+    pkgs = import nixpkgs {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+      overlays = [
+        (final: prev: {
+          unstable = import nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+        })
+      ];
+    };
   in {
     # output local functions defined in utils
     lib = lib.utils;
     nixosConfigurations = {
-      geralt = mkHost' {
-        name = "geralt";
-        wsl = false;
-        stateVersion = "23.05";
+      geralt = lib.nixosSystem {
+        # name = "geralt";
+        # wsl = false;
+        # stateVersion = "23.05";
+        system = "x86_64-linux";
+        specialArgs = { inherit lib pkgs;};
+        modules = [
+          ./hardware-configuration.nix
+          ./defaults.nix
+          ./hosts/geralt.nix
+          ./old/defaults.nix
+          ./old/desktop.nix
+          ./old/sound.nix
+          # ./old/nvidia.nix
+          ./old/security.nix
+          ./old/ssh.nix
+        ];
       };
     };
   };

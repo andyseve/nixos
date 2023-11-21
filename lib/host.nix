@@ -14,18 +14,16 @@
     ...
   }: let
     hostConfig = (import ../hosts/${name}.nix {
-      inherit name wsl stateVersion inputs lib;
+      inherit name wsl stateVersion lib inputs;
     });
   in
   lib.nixosSystem {
-    system = hostConfig.modules.system;
+    system = "x86_64-linux";
+    specialArgs = { inherit inputs lib stateVersion; name = "geralt"; wsl = "false"; };
     modules = [
-      {
-        inherit lib;
-        nixpkgs = hostConfig.nixpkgs;
-      } 
       ../hardware-configuration.nix
       ../defaults.nix
+      ../hosts/${name}.nix
       ../old/defaults.nix
       ../old/desktop.nix
       ../old/sound.nix

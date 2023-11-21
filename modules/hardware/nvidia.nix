@@ -40,7 +40,7 @@ in {
         (writeScriptBin "nvidia-settings" ''
           #!${stdenv.shell}
           mkdir -p "$XDG_CONFIG_HOME/nvidia"
-          exec ${config.boot.kernelPackages.nvidia_x11_settings}/bin/nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings"
+          exec ${config.boot.kernelPackages.nvidia_x11.settings}/bin/nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings"
         '')
       ];
     }

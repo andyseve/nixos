@@ -14,6 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = mkMerge [ pkgs.direnv ];
+    programs.direnv.enable = true;
+    environment.systemPackages = [ pkgs.direnv ];
   };
 }
