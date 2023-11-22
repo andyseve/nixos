@@ -17,6 +17,7 @@
     hardware = {
       nvidia.enable = true;
       nvidia.type = "stable";
+      audio.enable = true;
     };
   };
 
