@@ -22,7 +22,7 @@
     specialArgs = { inherit inputs lib stateVersion; name = "geralt"; wsl = "false"; };
     modules = [
       ../hardware-configuration.nix
-      ../defaults.nix
+      ../default.nix
       ../hosts/${name}.nix
       ../old/defaults.nix
       ../old/desktop.nix

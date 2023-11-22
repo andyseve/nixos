@@ -14,7 +14,7 @@ in {
 
     type = mkOption {
       description = "type of nvidia drivers, points to nvidia package";
-      type = types.string;
+      type = types.str;
       default = "stable";
       example = "legacy_390";
     };
@@ -34,6 +34,9 @@ in {
         driSupport = true;
         driSupport32Bit = true;
       };
+
+      nixpkgs.config.allowUnfree = mkForce true;
+      nixpkgs.config.cudaSupport = mkForce true;
 
       environment.systemPackages = with pkgs; [
         # Respecting XDG conventions

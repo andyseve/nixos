@@ -1,10 +1,15 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Host information file
+# 1. Modules - using settings from default modules
+# 2. Host - function which is used in makehost to determine system settings.
+# 3. Config - other customization options which are not covered my modules.
+# Host config and custom settings for geralt.
 
-{ config, lib, pkgs, ... }:
-
-{
+{ 
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   modules = {
     shell = {
       direnv.enable = true;
@@ -34,7 +39,7 @@
 # The global useDHCP flag is deprecated, therefore explicitly set to false here.
 # Per-interface useDHCP will be mandatory in the future, so this generated config
 # replicates the default behaviour.
-		networking.useDHCP = false;
+	networking.useDHCP = false;
 	networking.interfaces.wlp4s0.useDHCP = true;
 
 # Network Proxy

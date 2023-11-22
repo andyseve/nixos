@@ -12,8 +12,9 @@
     nixpkgs-unstable,
     ...
   } @ inputs: let
-    lib = nixpkgs.lib.extend
-    (final: prev: { utils = import ./lib {lib = final;}; });
+    lib = nixpkgs.lib.extend (final: prev: {
+      utils = import ./lib {lib = final;};
+    });
     pkgs = import nixpkgs {
       system = "x86_64-linux";
       config.allowUnfree = true;
@@ -29,6 +30,8 @@
   in {
     # output local functions defined in utils
     lib = lib.utils;
+
+    # nixos configurations for machines
     nixosConfigurations = {
       geralt = lib.nixosSystem {
         # name = "geralt";
@@ -38,13 +41,12 @@
         specialArgs = { inherit lib pkgs;};
         modules = [
           ./hardware-configuration.nix
-          ./defaults.nix
+          ./default.nix
           ./hosts/geralt.nix
+          ./users/stranger.nix
           ./old/defaults.nix
           ./old/desktop.nix
           ./old/sound.nix
-          # ./old/nvidia.nix
-          ./old/security.nix
           ./old/ssh.nix
         ];
       };
