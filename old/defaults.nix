@@ -30,50 +30,24 @@
   };
   i18n.defaultLocale = "en_US.UTF-8";
 
-  fonts = {
-    fonts = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      fira-code
-      cascadia-code
-      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "CascadiaCode" ]; })
-      lohit-fonts.marathi
-    ];
-  };
+  # fonts = {
+  #   fonts = with pkgs; [
+  #     noto-fonts
+  #     noto-fonts-cjk
+  #     noto-fonts-emoji
+  #     fira-code
+  #     cascadia-code
+  #     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "CascadiaCode" ]; })
+  #     lohit-fonts.marathi
+  #   ];
+  # };
 
   # Allow non-free drivers
-  hardware.enableRedistributableFirmware = true;
-
-  # Nix configuration
-  nix = {
-    # build related settings
-    settings = {
-      auto-optimise-store = true;
-      require-sigs = true;
-      experimental-features = ["nix-command" "flakes"];
-      substituters = [
-        "https://cache.nixos.org"
-        "https://nix-community.cachix.org"
-      ];
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-    };
-
-    # Garbage Collector
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-  };
-
-    # NixPkgs Configuration
-    nixpkgs.config.allowUnfree = true;
-
-    nixpkgs.overlays = import ../overlays;
+  # hardware.enableRedistributableFirmware = true;
+  #   # NixPkgs Configuration
+  #   nixpkgs.config.allowUnfree = true;
+  #
+  #   nixpkgs.overlays = import ../overlays;
 
   # environment variables
   environment.sessionVariables = rec {

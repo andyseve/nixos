@@ -13,6 +13,9 @@
     initrd.kernelModules = [];
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [];
+
+    # load iwlwifi driver
+
   };
 
   # refuse icmp recho requests
@@ -67,18 +70,9 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 # Timezone settings
-time.timeZone = "America/New_York";
-time.hardwareClockInLocalTime = true;
-services.localtimed.enable = true;
-
-# Defining mount points
-# Mounting Storage
-
-
-# Network Proxy
-# networking.proxy.default = "http://user:password@proxy:port/";
-# networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+  time.timeZone = "America/New_York";
+  time.hardwareClockInLocalTime = true;
+  services.localtimed.enable = true;
 
 # Some programs need SUID wrappers, can be configured further or are
 # started in user sessions.

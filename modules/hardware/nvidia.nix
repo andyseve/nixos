@@ -43,7 +43,7 @@ in {
       };
 
       nixpkgs.config = {
-        # nvidia drivers are unfree software
+        # nvidia drivers are proprietory
         allowUnfree = mkForce true;
         # enable cuda support for applications
         cudaSupport = mkForce true;

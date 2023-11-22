@@ -19,6 +19,9 @@
       nvidia.type = "stable";
       audio.enable = true;
     };
+    desktop = {
+      fonts.enable = true;
+    }
   };
 }
 
