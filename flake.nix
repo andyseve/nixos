@@ -46,7 +46,6 @@
           ./users/stranger.nix
           ./old/defaults.nix
           ./old/desktop.nix
-          ./old/sound.nix
           ./old/ssh.nix
         ];
       };

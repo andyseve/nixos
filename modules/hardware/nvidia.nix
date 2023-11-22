@@ -1,4 +1,11 @@
-{ options, config, lib, pkgs, ... }:
+# Settings for nvidia with legacy options
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: 
 
 with lib;
 let
@@ -35,8 +42,12 @@ in {
         driSupport32Bit = true;
       };
 
-      nixpkgs.config.allowUnfree = mkForce true;
-      nixpkgs.config.cudaSupport = mkForce true;
+      nixpkgs.config = {
+        # nvidia drivers are unfree software
+        allowUnfree = mkForce true;
+        # enable cuda support for applications
+        cudaSupport = mkForce true;
+      };
 
       environment.systemPackages = with pkgs; [
         # Respecting XDG conventions
