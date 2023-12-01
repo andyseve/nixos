@@ -18,9 +18,15 @@
       nvidia.enable = true;
       nvidia.type = "stable";
       audio.enable = true;
+      logitech.enable = false;
     };
     desktop = {
       fonts.enable = true;
+      fonts.marathi = true;
+    };
+    xdg = {
+      enable = true;
+      zsh = true;
     }
   };
 }

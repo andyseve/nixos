@@ -10,16 +10,16 @@
   options iwlwifi 11n_disable=8
   '';
   # logitech
-  hardware.logitech.wireless.enable=true;
+  # hardware.logitech.wireless.enable=true;
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi = {
-    canTouchEfiVariables = true;
-  };
-
-  boot.plymouth.enable = true;
-
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi = {
+  #   canTouchEfiVariables = true;
+  # };
+  #
+  # boot.plymouth.enable = true;
+  #
   # location
   location.provider = "geoclue2";
 
@@ -50,22 +50,22 @@
   #   nixpkgs.overlays = import ../overlays;
 
   # environment variables
-  environment.sessionVariables = rec {
-    XDG_CACHE_HOME  = "\${HOME}/.cache";
-    XDG_CONFIG_HOME = "\${HOME}/.config";
-    XDG_BIN_HOME    = "\${HOME}/.local/bin";
-    XDG_DATA_HOME   = "\${HOME}/.local/share";
-
-    # ZDOTDIR
-    ZDOTDIR         = "\${XDG_CONFIG_HOME}/zsh";
-
-    # PATH
-    PATH = [
-      "\${XDG_BIN_HOME}"
-    ];
-  };
-
-  environment.enableDebugInfo = true;
+  # environment.sessionVariables = rec {
+  #   XDG_CACHE_HOME  = "\${HOME}/.cache";
+  #   XDG_CONFIG_HOME = "\${HOME}/.config";
+  #   XDG_BIN_HOME    = "\${HOME}/.local/bin";
+  #   XDG_DATA_HOME   = "\${HOME}/.local/share";
+  #
+  #   # ZDOTDIR
+  #   ZDOTDIR         = "\${XDG_CONFIG_HOME}/zsh";
+  #
+  #   # PATH
+  #   PATH = [
+  #     "\${XDG_BIN_HOME}"
+  #   ];
+  # };
+  #
+  # environment.enableDebugInfo = true;
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     # Drivers
