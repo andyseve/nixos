@@ -6,7 +6,7 @@
   ...
 }: {
   # imports
-  imports = (lib.utils.module.listModules' (toString ./modules));
+  imports = (lib.myutils.module.listModules' (toString ./modules));
   # Nix configuration
   nix = {
     # flakes

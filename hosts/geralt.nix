@@ -22,7 +22,7 @@
     };
     desktop = {
       enable = true;
-      fonts.enable = true;
+      defaults = true;
       fonts.marathi = true;
     };
     xdg = {

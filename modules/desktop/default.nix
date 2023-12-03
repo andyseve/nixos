@@ -7,12 +7,19 @@
 }:
 
 with lib;
+with lib.myutils;
 let
   cfg = config.modules.desktop;
 in {
   options.modules.desktop = {
     enable = mkOption {
-      description = "Enables desktop environment with default options";
+      description = "Enables desktop environment";
+      type = types.bool;
+      default = false;
+      example = true;
+    };
+    defaults = mkOption {
+      description = "Set default options in desktop environment";
       type = types.bool;
       default = false;
       example = true;
@@ -33,7 +40,7 @@ in {
 
   config = mkMerge [
     ( mkIf cfg.picom.enable {
-      services.picom = {
+      services.picom = mkDefault {
         enable = true;
         backend = "glx";
         vSync = true;
@@ -58,24 +65,26 @@ in {
       };
     })
     ( mkIf cfg.redshift.enable {
-      services.redshift = {
+      services.redshift = mkDefault {
         enable = true;
         temperature.day = 6500;
         temperature.night = 3500;
       };
     })
-    ( mkIf cfg.enable {
+    ( mkIf (cfg.enable && cfg.xserver.enable) {
       assertions = [
         {
           # ensure that there is exactly only display manager
-          assertion = (countAttrs (name: value: n == "enable" && value) cfg.dm) == 1;
+          assertion = (countAttrs (_: value: (value ? enable) && value.enable) cfg.dm) == 1;
           message = "Exactly one display manager should be active";
         }
         {
-          assertion = (countAttrs (name: value: n == "enable" && value) cfg.wm) > 0;
+          assertion = (countAttrs (_: value: (value ? enable) && value.enable) cfg.wm) > 0;
           message = "At least one window manager should be active";
         }
       ];
+    })
+    ( mkIf cfg.defaults {
       modules.desktop = {
         xserver.enable = true;
         dm.lightdm.enable = true;
@@ -83,6 +92,7 @@ in {
 
         picom.enable = true;
         redshift.enable = true;
+        fonts.enable = true;
       };
     })
   ];

@@ -13,7 +13,7 @@
     ...
   } @ inputs: let
     lib = nixpkgs.lib.extend (final: prev: {
-      utils = import ./lib {lib = final;};
+      myutils = import ./lib {lib = final;};
     });
     pkgs = import nixpkgs {
       system = "x86_64-linux";
@@ -29,7 +29,7 @@
     };
   in {
     # output local functions defined in utils
-    lib = lib.utils;
+    lib = lib.myutils;
 
     # nixos configurations for machines
     nixosConfigurations = {

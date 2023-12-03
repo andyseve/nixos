@@ -20,7 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.displayManager = {
+    services.xserver.displayManager = {
       lightdm.enable = true;
     };
   };
