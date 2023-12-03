@@ -46,6 +46,7 @@ in {
       environment.variables = {
         ZDOTDIR = "$XDG_CONFIG_HOME/zsh";
         HISTFILE = "$ZDOTDIR/zsh_history";
+      };
     })
   ];
 }

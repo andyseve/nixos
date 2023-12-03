@@ -28,11 +28,14 @@ in {
 
   config = mkIf cfg.enable {
     fonts = {
-      fonts = with pkgs; [
-        noto-fonts noto-fonts-cjk noto-fonts-emoji
-        fira-code cascadia-code
-        (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "CascadiaCode" ]; })
-      ] ++ (mkIf cfg.marathi [ lohit-fonts.marathi ]);
+      fonts = with pkgs; mkMerge [
+        [
+          noto-fonts noto-fonts-cjk noto-fonts-emoji
+          fira-code cascadia-code
+          (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "CascadiaCode" ]; })
+        ]
+        (mkIf cfg.marathi [ lohit-fonts.marathi ])
+      ];
     };
   };
 }

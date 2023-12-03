@@ -26,9 +26,6 @@
       ../hosts/${name}.nix
       ../old/defaults.nix
       ../old/desktop.nix
-      ../old/sound.nix
-      ../old/nvidia.nix
-      ../old/security.nix
       ../old/ssh.nix
     ];
   };

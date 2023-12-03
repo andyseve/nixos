@@ -21,13 +21,14 @@
       logitech.enable = false;
     };
     desktop = {
+      enable = true;
       fonts.enable = true;
       fonts.marathi = true;
     };
     xdg = {
       enable = true;
       zsh = true;
-    }
+    };
   };
 }
 

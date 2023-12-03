@@ -13,7 +13,7 @@ in {
   options.modules.desktop.xmonad = {
     enable  = mkOption {
       description = "enable xmonad";
-      type = "types.bool";
+      type = types.bool;
       default = false;
       example = true;
     };
@@ -21,7 +21,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      xmobar # need a bar for xmonad
+      xmobar  # need a bar for xmonad
       feh # pictures
       dunst libnotify # notifications
       xdotool # xserver scripting
@@ -30,12 +30,6 @@ in {
       playerctl # control music in browsers from keyboard
     ];
     services = {
-      picom.enable = true;
-      redshift = {
-        enable = true;
-        temprature.day = 6500;
-        temprature.night = 3500;
-      };
       xserver = {
         enable = true;
         displayManager = {
@@ -51,6 +45,12 @@ in {
             haskellPackages.xmonad
           ];
         };
+      };
+      picom.enable = true;
+      redshift = {
+        enable = true;
+        temperature.day = 6500;
+        temperature.night = 3500;
       };
     };
   };
