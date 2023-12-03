@@ -31,11 +31,6 @@ in {
     ];
     services = {
       xserver = {
-        enable = true;
-        displayManager = {
-          defaultSession = "none+xmonad";
-          lightdm.enable = true;
-        };
         windowManager.xmonad = {
           enable = true;
           enableContribAndExtras = true;
@@ -45,12 +40,6 @@ in {
             haskellPackages.xmonad
           ];
         };
-      };
-      picom.enable = true;
-      redshift = {
-        enable = true;
-        temperature.day = 6500;
-        temperature.night = 3500;
       };
     };
   };
