@@ -8,9 +8,9 @@
 
 with lib;
 let
-  cfg = config.modules.desktop.xmonad;
+  cfg = config.modules.desktop.wm.xmonad;
 in {
-  options.modules.desktop.xmonad = {
+  options.modules.desktop.wm.xmonad = {
     enable  = mkOption {
       description = "enable xmonad";
       type = types.bool;
