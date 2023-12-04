@@ -11,14 +11,17 @@
   ...
 }: {
   modules = {
-    shell = {
-      direnv.enable = true;
-    };
     hardware = {
       nvidia.enable = true;
       nvidia.type = "stable";
       audio.enable = true;
       logitech.enable = false;
+    };
+    services = {
+      ssh.enable = true;
+    };
+    shell = {
+      direnv.enable = true;
     };
     desktop = {
       enable = true;
