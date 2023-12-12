@@ -15,8 +15,8 @@ in {
       type = types.bool;
       default = false;
       example = true;
-    }
-  }
+    };
+  };
 
   config = mkIf cfg.enable {
     # disable pulseaudio by default

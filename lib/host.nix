@@ -10,26 +10,29 @@
     name,
     wsl,
     stateVersion,
-    inputs,
+    lib,
+    pkgs,
     ...
   }: let
     hostConfig = (import ../hosts/${name}.nix {
-      inherit name wsl stateVersion lib inputs;
+      inherit lib pkgs;
+      config = {};
     });
+    if stateVersion < min_stateVersion then return false;
+    nixpkgs = inputs.nixpkgs-${stateVersion};
+    pkgs = import inputs.nixpkgs-${stateVersion};
+    lib = inputs.nixpkgs-${stateVersion}.lib;
   in
   lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit inputs lib stateVersion; name = "geralt"; wsl = "false"; };
+    specialArgs = { inherit lib pkgs; };
     modules = [
       ../hardware-configuration.nix
       ../default.nix
       ../hosts/${name}.nix
+      ../users/stranger.nix
       ../old/defaults.nix
       ../old/desktop.nix
-      ../old/sound.nix
-      ../old/nvidia.nix
-      ../old/security.nix
-      ../old/ssh.nix
     ];
   };
 }

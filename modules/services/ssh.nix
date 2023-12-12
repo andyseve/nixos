@@ -9,7 +9,7 @@ with lib;
 let 
   cfg = config.modules.services.ssh;
 in {
-  options.modules.servies.ssh = {
+  options.modules.services.ssh = {
     enable = mkOption {
       description = "enable ssh server";
       type = types.bool;
