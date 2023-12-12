@@ -32,7 +32,7 @@ in {
         enable = true;
         allowSFTP = true;
         settings.X11Forwarding = false;
-        settings.logLevel = "VERBOSE";
+        settings.LogLevel = "VERBOSE";
         ports = [ 22 ];
         settings.PermitRootLogin = "no";
         settings.PasswordAuthentication = false;

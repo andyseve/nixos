@@ -1,6 +1,7 @@
 # security settings
 {
   config,
+  options,
   lib,
   ...
 }: {
