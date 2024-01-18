@@ -8,22 +8,25 @@
 
 with lib;
 let
-  cfg = config.modules.desktop.fonts;
+  modules = config.modules;
+  cfg = modules.desktop.fonts;
 in {
   options.modules.desktop.fonts = {
+
     enable = mkOption {
       description = "enable fonts";
       type = types.bool;
-      default = false;
+      default = modules.desktop.enable;
       example = true;
     };
 
     marathi = mkOption {
       description = "enable fonts";
       type = types.bool;
-      default = false;
+      default = cfg.enable;
       example = true;
     };
+
   };
 
   config = mkIf cfg.enable {

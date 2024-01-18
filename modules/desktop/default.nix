@@ -9,42 +9,61 @@
 with lib;
 with lib.myutils;
 let
-  cfg = config.modules.desktop;
+  modules = config.modules;
+  cfg = modules.desktop;
 in {
   options.modules.desktop = {
+
     enable = mkOption {
       description = "Enables desktop environment";
       type = types.bool;
       default = false;
       example = true;
     };
-    defaults = mkOption {
-      description = "Set default options in desktop environment";
-      type = types.bool;
-      default = false;
-      example = true;
-    };
+
+    # Removing defaults because each variable is set to value I like if the enable option is set to true.
+    # defaults = mkOption {
+    #   description = "Set default options in desktop environment";
+    #   type = types.bool;
+    #   default = false;
+    #   example = true;
+    # };
+
     picom.enable = mkOption {
       description = "Enable picom compositor";
       type = types.bool;
-      default = false;
+      default = cfg.enable;
       example = true;
     };
+
     redshift.enable = mkOption {
       description = "Enable redshift to change colors during day and night";
       type = types.bool;
-      default = false;
+      default = cfg.enable;
       example = true;
     };
+
   };
 
   config = mkMerge [
+    # ( mkIf cfg.defaults {
+    #   modules.desktop = {
+    #     xserver.enable = true;
+    #     dm.lightdm.enable = true;
+    #     wm.xmonad.enable = true;
+    #     picom.enable = true;
+    #     redshift.enable = true;
+    #     fonts.enable = true;
+    #   };
+    # })
+
     ( mkIf cfg.picom.enable {
       services.picom = mkDefault {
         enable = true;
         backend = "glx";
         vSync = true;
         settings = {
+
           # Unredirect all windows if a full-screen opaque window is detected, to
           # maximize performance for full-screen windows. Known to cause
           # flickering when redirecting/unredirecting windows.
@@ -61,9 +80,11 @@ in {
           # calls are finished before picom starts drawing. Needed on
           # nvidia-drivers with GLX backend for some users.
           xrender-sync-fence = true;
+
         };
       };
     })
+
     ( mkIf cfg.redshift.enable {
       services.redshift = mkDefault {
         enable = true;
@@ -71,6 +92,7 @@ in {
         temperature.night = 3500;
       };
     })
+
     ( mkIf (cfg.enable && cfg.xserver.enable) {
       assertions = [
         {
@@ -83,17 +105,6 @@ in {
           message = "At least one window manager should be active";
         }
       ];
-    })
-    ( mkIf cfg.defaults {
-      modules.desktop = {
-        xserver.enable = true;
-        dm.lightdm.enable = true;
-        wm.xmonad.enable = true;
-
-        picom.enable = true;
-        redshift.enable = true;
-        fonts.enable = true;
-      };
     })
   ];
 }

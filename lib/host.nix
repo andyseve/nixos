@@ -7,9 +7,9 @@
 {
   # write a generic mkGenericHost function which does not rely on existing config
   mkHost = {
-    name,
-    wsl,
-    stateVersion,
+    name ? "geralt",
+    wsl ? false,
+    stateVersion ? "23.11",
     ...
   }: let
     hostConfig = (import ../hosts/${name}.nix {
@@ -18,7 +18,7 @@
   in
   lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit lib stateVersion; name = "geralt"; wsl = "false"; };
+    specialArgs = { inherit lib stateVersion; name = "geralt"; wsl = false; };
     modules = [
       ../hardware-configuration.nix
       ../default.nix

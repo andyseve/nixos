@@ -15,7 +15,7 @@
       nvidia.enable = true;
       nvidia.type = "stable";
       audio.enable = true;
-      logitech.enable = false;
+      logitech.enable = true;
     };
     services = {
       ssh.enable = true;
@@ -23,11 +23,7 @@
     shell = {
       direnv.enable = true;
     };
-    desktop = {
-      enable = true;
-      defaults = true;
-      fonts.marathi = true;
-    };
+    desktop.enable = true;
     xdg = {
       enable = true;
       zsh = true;

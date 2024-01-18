@@ -2,16 +2,16 @@
   description = "NixOS config by Anish Sevekari";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = {
+  outputs = inputs @ {
     self,
     nixpkgs,
     nixpkgs-unstable,
     ...
-  } @ inputs: let
+  }: let
     lib = nixpkgs.lib.extend (final: prev: {
       myutils = import ./lib {lib = final;};
     });
