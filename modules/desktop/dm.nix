@@ -13,7 +13,7 @@ let
 in {
   options.modules.desktop.dm = {
 
-    lightdm = mkOption {
+    lightdm.enable = mkOption {
       description = "Enable lightdm";
       type = types.bool;
       default = false;
@@ -24,7 +24,7 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.lightdm {
+    ( mkIf cfg.lightdm.enable {
       services.xserver.displayManager = {
         lightdm.enable = true;
       };

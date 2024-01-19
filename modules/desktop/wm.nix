@@ -12,12 +12,14 @@ let
   cfg = modules.desktop.wm;
 in {
   options.modules.desktop.wm = {
-    xmonad = mkOption {
+
+    xmonad.enable = mkOption {
       description = "enable xmonad";
       type = types.bool;
       default = false;
       example = true;
     };
+
   };
 
   config = mkMerge [

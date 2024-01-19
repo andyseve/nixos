@@ -43,6 +43,20 @@ in {
       example = true;
     };
 
+    dm.default = mkOption {
+      description = "Default desktop manager";
+      type = types.str;
+      default = "lightdm";
+      example = "lightdm";
+    };
+
+    wm.default = mkOption {
+      description = "Default window manager";
+      type = types.str;
+      default = "xmonad";
+      example = "xmonad";
+    };
+
   };
 
   config = mkMerge [
@@ -56,6 +70,11 @@ in {
     #     fonts.enable = true;
     #   };
     # })
+
+    ( mkIf cfg.enable {
+      modules.desktop.wm.${cfg.wm.default}.enable = true;
+      modules.desktop.dm.${cfg.dm.default}.enable = true;
+    })
 
     ( mkIf cfg.picom.enable {
       services.picom = mkDefault {
