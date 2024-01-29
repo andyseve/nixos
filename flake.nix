@@ -32,22 +32,22 @@
     lib = lib.myutils;
 
     # nixos configurations for machines
-    nixosConfigurations = {
-      geralt = lib.nixosSystem {
-        # name = "geralt";
-        # wsl = false;
-        # stateVersion = "23.05";
-        system = "x86_64-linux";
-        specialArgs = { inherit lib pkgs;};
-        modules = [
-          ./hardware-configuration.nix
-          ./default.nix
-          ./hosts/geralt.nix
-          ./users/stranger.nix
-          ./old/defaults.nix
-          ./old/desktop.nix
-        ];
-      };
-    };
+    # nixosConfigurations = {
+    #   geralt = lib.nixosSystem {
+    #     # name = "geralt";
+    #     # wsl = false;
+    #     # stateVersion = "23.05";
+    #     system = "x86_64-linux";
+    #     specialArgs = { inherit lib pkgs;};
+    #     modules = [
+    #       ./hardware-configuration.nix
+    #       ./default.nix
+    #       ./hosts/geralt.nix
+    #       ./users/stranger.nix
+    #       ./old/defaults.nix
+    #       ./old/desktop.nix
+    #     ];
+    #   };
+    # };
   };
 }
