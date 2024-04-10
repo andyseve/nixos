@@ -12,9 +12,6 @@
     nixpkgs-unstable,
     ...
   }: let
-    lib = nixpkgs.lib.extend (final: prev: {
-      myutils = import ./lib {lib = final;};
-    });
     pkgs = import nixpkgs {
       system = "x86_64-linux";
       config.allowUnfree = true;
@@ -27,9 +24,10 @@
         })
       ];
     };
-  in {
-    # output local functions defined in utils
-    lib = lib.myutils;
+  in rec {
+    lib = nixpkgs-unstable.lib.extend (final: prev: {
+      myutils = import ./lib {lib = final;};
+    });
 
     # nixos configurations for machines
     # nixosConfigurations = {

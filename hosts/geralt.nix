@@ -11,6 +11,7 @@
   ...
 }: {
   modules = {
+    system = "x86_64-linux";
     hardware = {
       nvidia.enable = true;
       nvidia.type = "stable";
