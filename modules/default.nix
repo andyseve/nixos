@@ -11,43 +11,12 @@ with lib;
 let
   modules = config.modules;
 in {
-  options.modules.system = {
-
-    xmonad.enable = mkOption {
-      description = "enable xmonad";
-      type = types.bool;
-      default = false;
-      example = true;
-    };
-
+  options.modules.system = mkOption {
+    description = "host system";
+    type = types.str;
+    default = "x86_64-linux";
+    example = "x86_64-linux";
   };
 
-  config = mkMerge [
-
-    ( mkIf cfg.xmonad {
-      environment.systemPackages = with pkgs; [
-        xmobar  # need a bar for xmonad
-        feh # pictures
-        dunst libnotify # notifications
-        xdotool # xserver scripting
-        xorg.xmodmap xorg.xrandr xorg.libXinerama # xserver scripting
-
-        playerctl # control music in browsers from keyboard
-      ];
-      services = {
-        xserver = {
-          windowManager.xmonad = {
-            enable = true;
-            enableContribAndExtras = true;
-            extraPackages = haskellPackages : [
-              haskellPackages.xmonad-contrib
-              haskellPackages.xmonad-extras
-              haskellPackages.xmonad
-            ];
-          };
-        };
-      };
-    })
-
-  ];
+  config.system = lib.mkDefault options.modules.system;
 }
