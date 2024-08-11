@@ -47,5 +47,5 @@ in rec {
     directories = filterAttrs (name: value: value == "directory") contents;
     files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents;
   in
-    mapAttrs (name: value: (fn "${toString dir}/${name}")) files // concatMapAttrs (name: value: mapModules fn "${toString dir}/${name}") directories;
+    mapAttrs (name: value: (fn "${toString dir}/${name}")) files // concatMapAttrs (name: value: mapModules' fn "${toString dir}/${name}") directories;
 }
