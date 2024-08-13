@@ -8,15 +8,17 @@
 with lib;
 let
   cfg = config.modules.printing;
-in
+in {
   options.modules.printing = {
+
     enable = mkOption {
       description = "allow printer support";
       type = types.bool;
       default = false;
       example = true;
-    }
-  }
+    };
+
+  };
 
   config = mkMerge [
 
@@ -29,4 +31,6 @@ in
         hplipWithPlugin
       ];
     })
-  ]
+
+  ];
+}
