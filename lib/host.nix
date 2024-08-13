@@ -1,15 +1,18 @@
 # Function definition to define hosts
 # Reads settings from ../hosts/${hostname}.nix file to generate nixosSystem object
 {
+  inputs,
   lib,
+  pkgs,
+  stateVersion,
   ...
 }:
 {
-  # write a generic mkGenericHost function which does not rely on existing config
+  # mkHost reads from hosts/${hostname}.nix file and creates a nixos config
   mkHost = {
     name ? "geralt",
     wsl ? false,
-    stateVersion ? "23.11",
+    stateVersion ? stateVersion,
     ...
   }: let
     hostConfig = (import ../hosts/${name}.nix {
@@ -18,7 +21,7 @@
   in
   lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit lib stateVersion; name = "geralt"; wsl = false; };
+    specialArgs = { inherit inputs lib stateVersion name wsl };
     modules = [
       ../hardware-configuration.nix
       ../default.nix

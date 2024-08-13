@@ -10,8 +10,8 @@ with lib;
 let
   cfg = config.modules.xdg;
 in {
-  options.modules.xdg = {
-    enable = mkOption {
+  options.modules.env = {
+    xdg = mkOption {
       description = "set up default xdg locations";
       type = types.bool;
       default = true;
@@ -26,6 +26,7 @@ in {
   };
 
   config = mkMerge [
+
     ( mkIf cfg.enable {
       environment.sessionVariables = {
         # xdg default settings
@@ -42,11 +43,17 @@ in {
         WGETRC = "$XDG_CONFIG_HOME/wgetrc";
       };
     })
+
     ( mkIf cfg.zsh {
+      programs.zsh = {
+        enable = true;
+        enableCompletion = true;
+      };
       environment.variables = {
         ZDOTDIR = "$XDG_CONFIG_HOME/zsh";
         HISTFILE = "$ZDOTDIR/zsh_history";
       };
     })
+
   ];
 }

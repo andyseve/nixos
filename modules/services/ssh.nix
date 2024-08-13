@@ -35,7 +35,7 @@ in {
         settings.LogLevel = "VERBOSE";
         ports = [ 22 ];
         settings.PermitRootLogin = "no";
-        settings.PasswordAuthentication = false;
+        settings.PasswordAuthentication = true;
 
         extraConfig = ''
           # Authentication

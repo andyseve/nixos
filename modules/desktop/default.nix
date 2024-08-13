@@ -21,14 +21,6 @@ in {
       example = true;
     };
 
-    # Removing defaults because each variable is set to value I like if the enable option is set to true.
-    # defaults = mkOption {
-    #   description = "Set default options in desktop environment";
-    #   type = types.bool;
-    #   default = false;
-    #   example = true;
-    # };
-
     picom.enable = mkOption {
       description = "Enable picom compositor";
       type = types.bool;
@@ -60,16 +52,6 @@ in {
   };
 
   config = mkMerge [
-    # ( mkIf cfg.defaults {
-    #   modules.desktop = {
-    #     xserver.enable = true;
-    #     dm.lightdm.enable = true;
-    #     wm.xmonad.enable = true;
-    #     picom.enable = true;
-    #     redshift.enable = true;
-    #     fonts.enable = true;
-    #   };
-    # })
 
     ( mkIf cfg.enable {
       modules.desktop.wm.${cfg.wm.default}.enable = true;

@@ -24,11 +24,6 @@
     shell = {
       direnv.enable = true;
     };
-    desktop.enable = true;
-    xdg = {
-      enable = true;
-      zsh = true;
-    };
   };
 }
 
