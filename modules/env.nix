@@ -8,7 +8,7 @@
 
 with lib;
 let
-  cfg = config.modules.xdg;
+  cfg = config.modules.env;
 in {
   options.modules.env = {
     xdg = mkOption {

@@ -11,8 +11,10 @@
   pkgs,
   ...
 }: {
+
+  networking.hostName = "vesemir";
+
   modules = {
-    # system = "x86_64-linux";
     hardware = {
       audio.enable = true;
     };
@@ -23,16 +25,15 @@
       direnv.enable = true;
     };
     desktop = {
-      wm.default = "hyprland";
+      dm.lightdm.enable = true;
+      wm.hyprland.enable = true;
     };
-    # desktop.enable = true;
     env = {
       xdg = true;
       zsh = true;
     };
   };
 
-  networking.hostname = "vesemir";
 
   programs.hyprland = {
     enable = true;

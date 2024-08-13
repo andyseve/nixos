@@ -16,13 +16,26 @@ in {
     enable = mkOption {
       description = "Enable xserver with default options";
       type = types.bool;
-      default = modules.desktop.enable;
+      default = false;
       example = true;
     };
 
   };
 
   config = mkIf cfg.enable {
-    services.xserver.enable = true;
+    services.xserver = {
+      enable = true;
+      layout = "us";
+      # xkbOptions = "eurosign:e"
+
+      libinput = {
+        enable = true;
+        touchpad = {
+          accelProfile = "flat";
+          disableWhileTyping = true;
+        };
+      };
+      wacom.enable = true;
+    };
   };
 }

@@ -32,6 +32,8 @@ in {
   config = mkMerge [
 
     ( mkIf cfg.xmonad.enable {
+      modules.desktop.enable = true;
+      modules.desktop.xserver.enable = true;
       services = mkDefault {
         xserver = {
           windowManager.xmonad = {
