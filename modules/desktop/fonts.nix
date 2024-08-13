@@ -31,7 +31,7 @@ in {
 
   config = mkIf cfg.enable {
     fonts = {
-      fonts = with pkgs; mkMerge [
+      packages = with pkgs; mkMerge [
         [
           noto-fonts noto-fonts-cjk noto-fonts-emoji
           fira-code cascadia-code

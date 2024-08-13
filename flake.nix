@@ -13,6 +13,11 @@
     unstable,
     hyprland,
   }: let
+    system = "x86_64-linux";
+    upkgs = import unstable {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+    };
   in rec {
     # output local functions defined in utils
     lib = unstable.lib.extend (final: prev: {
@@ -21,8 +26,8 @@
 
     nixosConfigurations = {
       vesemir = lib.nixosSystem {
-        system = "x86_64-linux";
-	specialArgs = { inherit inputs; };
+        inherit system;
+        specialArgs = { inherit upkgs inputs; };
         modules = [
           ./hardware-configuration.nix
           ./default.nix

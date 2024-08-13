@@ -27,7 +27,7 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.enable {
+    ( mkIf cfg.xdg {
       environment.sessionVariables = {
         # xdg default settings
         XDG_CACHE_HOME  = "$HOME/.cache";

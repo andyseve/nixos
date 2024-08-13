@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   options,
   lib,
@@ -87,11 +88,11 @@ in {
         rofi
         xdotool # xserver scripting
         xorg.xmodmap xorg.xrandr xorg.libXinerama # xserver scripting
-        playerctl # control music in browsers from keyboard
       ];
     })
 
     ( mkIf cfg.hyprland.enable {
+      modules.desktop.enable = true;
       programs.hyprland = {
         enable = true;
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;

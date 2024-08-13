@@ -1,8 +1,10 @@
 {
+  inputs,
   config,
   options,
   lib,
   pkgs,
+  upkgs,
   ...
 }:
 
@@ -21,28 +23,39 @@ in {
       example = true;
     };
 
-  #   dm.default = mkOption {
-  #     description = "Default desktop manager";
-  #     type = types.str;
-  #     default = "lightdm";
-  #     example = "lightdm";
-  #   };
-  #
-  #   wm.default = mkOption {
-  #     description = "Default window manager";
-  #     type = types.str;
-  #     default = "xmonad";
-  #     example = "xmonad";
-  #   };
+    # dm.default = mkOption {
+    #   description = "Default desktop manager";
+    #   type = types.str;
+    #   default = "";
+    #   example = "lightdm";
+    # };
+    #
+    # wm.default = mkOption {
+    #   description = "Default window manager";
+    #   type = types.str;
+    #   default = "";
+    #   example = "xmonad";
+    # };
 
   };
 
-  # config = mkMerge [
-  #
-  #   ( mkIf cfg.enable {
-  #     modules.desktop.wm.${cfg.wm.default}.enable = true;
-  #     modules.desktop.dm.${cfg.dm.default}.enable = true;
-  #   })
+  config = mkMerge [
+
+    ( mkIf cfg.enable {
+      # modules.desktop.wm.${cfg.wm.default}.enable = true;
+      # modules.desktop.dm.${cfg.dm.default}.enable = true;
+
+      environment.systemPackages = [
+        pkgs.firefox
+        pkgs.vlc
+        pkgs.zathura
+        pkgs.kitty
+
+        upkgs.zoom-us upkgs.slack upkgs.discord
+        
+        pkgs.streamlink pkgs.playerctl
+      ];
+    })
 
     # ( mkIf (cfg.enable && cfg.xserver.enable) {
     #   assertions = [
@@ -57,5 +70,5 @@ in {
     #     }
     #   ];
     # })
-  # ];
+  ];
 }

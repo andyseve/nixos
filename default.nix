@@ -38,7 +38,10 @@
       options = "--delete-older-than 7d";
     };
   };
-  
+
+  # Allow unfree
+  nixpkgs.config.allowUnfree = true;
+
   # system settings
   system.stateVersion = lib.mkDefault "24.05";
 

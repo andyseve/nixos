@@ -25,7 +25,7 @@
       direnv.enable = true;
     };
     desktop = {
-      dm.lightdm.enable = true;
+      enable = true;
       wm.hyprland.enable = true;
     };
     env = {
@@ -33,13 +33,5 @@
       zsh = true;
     };
   };
-
-
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    xwayland.enable = true;
-  };
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
 

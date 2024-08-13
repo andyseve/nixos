@@ -25,6 +25,8 @@ in {
   config = mkMerge [
 
     ( mkIf cfg.lightdm.enable {
+      modules.desktop.enable = true;
+      modules.desktop.xserver.enable = true;
       services.xserver.displayManager = {
         lightdm.enable = true;
       };
