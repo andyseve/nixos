@@ -9,10 +9,10 @@
 
 with lib;
 let
-  modules = config.modules;
+  modules = config.anish-sevekari-modules;
   cfg = modules.desktop.wm;
 in {
-  options.modules.desktop.wm = {
+  options.anish-sevekari-modules.desktop.wm = {
 
     xmonad.enable = mkOption {
       description = "enable xmonad";
@@ -33,8 +33,8 @@ in {
   config = mkMerge [
 
     ( mkIf cfg.xmonad.enable {
-      modules.desktop.enable = true;
-      modules.desktop.xserver.enable = true;
+      anish-sevekari-modules.desktop.enable = true;
+      anish-sevekari-modules.desktop.xserver.enable = true;
       services = mkDefault {
         xserver = {
           windowManager.xmonad = {
@@ -92,7 +92,7 @@ in {
     })
 
     ( mkIf cfg.hyprland.enable {
-      modules.desktop.enable = true;
+      anish-sevekari-modules.desktop.enable = true;
       programs.hyprland = {
         enable = true;
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;

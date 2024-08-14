@@ -8,10 +8,10 @@
 
 with lib;
 let
-  modules = config.modules;
+  modules = config.anish-sevekari-modules;
   cfg = modules.desktop.xserver;
 in {
-  options.modules.desktop.xserver = {
+  options.anish-sevekari-modules.desktop.xserver = {
 
     enable = mkOption {
       description = "Enable xserver with default options";

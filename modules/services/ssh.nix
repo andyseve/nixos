@@ -7,9 +7,9 @@
 
 with lib;
 let 
-  cfg = config.modules.services.ssh;
+  cfg = config.anish-sevekari-modules.services.ssh;
 in {
-  options.modules.services.ssh = {
+  options.anish-sevekari-modules.services.ssh = {
     enable = mkOption {
       description = "enable ssh server";
       type = types.bool;

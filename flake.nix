@@ -29,7 +29,6 @@
         inherit system;
         specialArgs = { inherit upkgs inputs; };
         modules = [
-          ./hardware-configuration.nix
           ./default.nix
           ./hosts/vesemir.nix
           ./users/stranger.nix

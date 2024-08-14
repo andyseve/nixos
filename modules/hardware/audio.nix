@@ -7,9 +7,9 @@
 
 with lib;
 let
-  cfg = config.modules.hardware.audio;
+  cfg = config.anish-sevekari-modules.hardware.audio;
 in {
-  options.modules.hardware.audio = {
+  options.anish-sevekari-modules.hardware.audio = {
     enable = mkOption {
       description = "enable audio capabilities";
       type = types.bool;

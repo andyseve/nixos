@@ -8,10 +8,10 @@
 
 with lib;
 let
-  modules = config.modules;
+  modules = config.anish-sevekari-modules;
   cfg = modules.desktop.fonts;
 in {
-  options.modules.desktop.fonts = {
+  options.anish-sevekari-modules.desktop.fonts = {
 
     enable = mkOption {
       description = "enable fonts";

@@ -8,9 +8,9 @@
 
 with lib;
 let
-  cfg = config.modules.env;
+  cfg = config.anish-sevekari-modules.env;
 in {
-  options.modules.env = {
+  options.anish-sevekari-modules.env = {
     xdg = mkOption {
       description = "set up default xdg locations";
       type = types.bool;

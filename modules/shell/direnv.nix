@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.shell.direnv;
+  cfg = config.anish-sevekari-modules.shell.direnv;
 in
 {
-  options.modules.shell.direnv = {
+  options.anish-sevekari-modules.shell.direnv = {
     enable = mkOption {
       description = "enable direnv";
       type = types.bool;

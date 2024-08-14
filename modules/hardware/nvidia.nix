@@ -9,9 +9,9 @@
 
 with lib;
 let
-  cfg = config.modules.hardware.nvidia;
+  cfg = config.anish-sevekari-modules.hardware.nvidia;
 in {
-  options.modules.hardware.nvidia = {
+  options.anish-sevekari-modules.hardware.nvidia = {
     enable = mkOption {
       description = "enable nvidia gpu drivers";
       type = types.bool;

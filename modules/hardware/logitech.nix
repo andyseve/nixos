@@ -9,9 +9,9 @@
 
 with lib;
 let
-  cfg = config.modules.hardware.logitech;
+  cfg = config.anish-sevekari-modules.hardware.logitech;
 in {
-  options.modules.hardware.logitech = {
+  options.anish-sevekari-modules.hardware.logitech = {
     enable = mkOption {
       description = "enable logitech wireless devices";
       type = types.bool;

@@ -11,10 +11,10 @@
 with lib;
 with lib.myutils;
 let
-  modules = config.modules;
+  modules = config.anish-sevekari-modules;
   cfg = modules.desktop;
 in {
-  options.modules.desktop = {
+  options.anish-sevekari-modules.desktop = {
 
     enable = mkOption {
       description = "Enables desktop environment";

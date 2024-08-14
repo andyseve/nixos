@@ -7,9 +7,9 @@
 
 with lib;
 let
-  cfg = config.modules.printing;
+  cfg = config.anish-sevekari-modules.printing;
 in {
-  options.modules.printing = {
+  options.anish-sevekari-modules.printing = {
 
     enable = mkOption {
       description = "allow printer support";
