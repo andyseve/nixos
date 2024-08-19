@@ -13,7 +13,8 @@ with lib.myutils;
 let
   modules = config.anish-sevekari-modules;
   cfg = modules.desktop;
-in {
+in
+{
   options.anish-sevekari-modules.desktop = {
 
     enable = mkOption {
@@ -41,7 +42,7 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.enable {
+    (mkIf cfg.enable {
       # modules.desktop.wm.${cfg.wm.default}.enable = true;
       # modules.desktop.dm.${cfg.dm.default}.enable = true;
 
@@ -51,9 +52,12 @@ in {
         pkgs.zathura
         pkgs.kitty
 
-        upkgs.zoom-us upkgs.slack upkgs.discord
-        
-        pkgs.streamlink pkgs.playerctl
+        upkgs.zoom-us
+        upkgs.slack
+        upkgs.discord
+
+        pkgs.streamlink
+        pkgs.playerctl
       ];
     })
 

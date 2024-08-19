@@ -1,6 +1,6 @@
 {
-  pkgs   ? import <nixpkgs> {},
-  lib    ? import pkgs.lib,
+  pkgs ? import <nixpkgs> { },
+  lib ? import pkgs.lib,
   stdenv ? import pkgs.stdenv,
   ...
 }:
@@ -17,5 +17,5 @@ stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     install -t $out/bin ./*
-    '';
+  '';
 }

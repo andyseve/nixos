@@ -5,12 +5,13 @@
   lib,
   pkgs,
   ...
-}: 
+}:
 
 with lib;
 let
   cfg = config.anish-sevekari-modules.hardware.logitech;
-in {
+in
+{
   options.anish-sevekari-modules.hardware.logitech = {
     enable = mkOption {
       description = "enable logitech wireless devices";
@@ -20,7 +21,5 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    hardware.logitech.wireless.enable = true;
-  };
+  config = mkIf cfg.enable { hardware.logitech.wireless.enable = true; };
 }

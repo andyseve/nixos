@@ -4,7 +4,8 @@
   options,
   lib,
   ...
-}: {
+}:
+{
   # turn on sudo capabilities
   # eventually I should remove this - everything is handled by nix config files
   security.sudo.enable = lib.mkDefault true;

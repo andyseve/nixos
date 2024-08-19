@@ -10,7 +10,8 @@ with lib;
 let
   modules = config.anish-sevekari-modules;
   cfg = modules.desktop.dm;
-in {
+in
+{
   options.anish-sevekari-modules.desktop.dm = {
 
     lightdm.enable = mkOption {
@@ -24,7 +25,7 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.lightdm.enable {
+    (mkIf cfg.lightdm.enable {
       anish-sevekari-modules.desktop.enable = true;
       anish-sevekari-modules.desktop.xserver.enable = true;
       services.xserver.displayManager = {

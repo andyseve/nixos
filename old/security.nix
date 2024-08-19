@@ -1,5 +1,5 @@
 # security and user settings to generate users by default.
-{ 
+{
   config,
   lib,
   pkgs,
@@ -16,7 +16,11 @@
     isNormalUser = true;
     home = "/home/stranger";
     description = "Anish Sevekari";
-    extraGroups = [ "wheel" "networkmanager" "video" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "video"
+    ]; # Enable ‘sudo’ for the user.
     createHome = true;
     shell = "${pkgs.zsh}/bin/zsh";
   };

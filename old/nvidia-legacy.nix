@@ -14,7 +14,7 @@
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
     modesetting.enable = true;
-    nvidiaSettings =  true;
+    nvidiaSettings = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
     open = false;
@@ -32,9 +32,7 @@
   };
 
   nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override {
-      enableHybridCodec = true;
-    };
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
 
   boot.blacklistedKernelModules = lib.mkDefault [ "nouveau" ];

@@ -9,7 +9,8 @@
 with lib;
 let
   cfg = config.anish-sevekari-modules.env;
-in {
+in
+{
   options.anish-sevekari-modules.env = {
     xdg = mkOption {
       description = "set up default xdg locations";
@@ -27,16 +28,16 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.xdg {
+    (mkIf cfg.xdg {
       environment.sessionVariables = {
         # xdg default settings
-        XDG_CACHE_HOME  = "$HOME/.cache";
+        XDG_CACHE_HOME = "$HOME/.cache";
         XDG_CONFIG_HOME = "$HOME/.config";
-        XDG_DATA_HOME   = "$HOME/.local/share";
-        XDG_STATE_HOME  = "$HOME/.local/state";
+        XDG_DATA_HOME = "$HOME/.local/share";
+        XDG_STATE_HOME = "$HOME/.local/state";
 
         # XDG_BIN_HOME is not included in official specifications
-        XDG_BIN_HOME    = "$HOME/.local/bin";
+        XDG_BIN_HOME = "$HOME/.local/bin";
       };
       environment.variables = {
         LESSHISTFILE = "$XDG_CACHE_HOME/lesshst";
@@ -44,7 +45,7 @@ in {
       };
     })
 
-    ( mkIf cfg.zsh {
+    (mkIf cfg.zsh {
       programs.zsh = {
         enable = true;
         enableCompletion = true;

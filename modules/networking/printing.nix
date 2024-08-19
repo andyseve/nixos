@@ -8,7 +8,8 @@
 with lib;
 let
   cfg = config.anish-sevekari-modules.networking.printing;
-in {
+in
+{
   options.anish-sevekari-modules.networking.printing = {
 
     enable = mkOption {
@@ -22,7 +23,7 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.cusp {
+    (mkIf cfg.enable {
       # Enable CUPS to print documents.
       services.printing.enable = true;
       services.printing.drivers = with pkgs; [

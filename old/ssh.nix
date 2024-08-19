@@ -29,13 +29,13 @@
       # Config
       PrintLastLog yes
       TCPKeepAlive yes
-      '';
-    };
+    '';
+  };
 
   # ssh agent
   # comment out to use gpg agent
   #programs.ssh = {
-    #startAgent = true;
-    #agentTimeout = "30m";
+  #startAgent = true;
+  #agentTimeout = "30m";
   #};
 }

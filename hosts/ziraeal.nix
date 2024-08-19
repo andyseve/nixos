@@ -4,15 +4,21 @@
 # 3. Config - other customization options which are not covered my modules.
 # Host config and custom settings for geralt.
 
-{ 
+{
   inputs,
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   # Boot settings
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -20,7 +26,7 @@
 
   # Timezone settings
   time.timeZone = "America/New_York";
-  time.hardwareClockInLocalTime = false;  
+  time.hardwareClockInLocalTime = false;
 
   # Defining mount points
   # Mounting Home
@@ -28,27 +34,35 @@
     device = "/dev/disk/by-label/boot";
     fsType = "vfat";
   };
-  
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
 
-  fileSystems."/home" = { 
+  fileSystems."/home" = {
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
     options = [ "defaults" ];
   };
 
-  swapDevices = [
-    { device = "/dev/disk/by-label/swap"; }
-  ];
+  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   # Mounting Storage
   fileSystems."/media/storage" = {
     device = "/dev/disk/by-label/storage";
     fsType = "ntfs";
-    options = [ "auto" "rw" "nosuid" "nofail" "user" "uid=1000" "gid=100" "exec" "umask=022"];
+    options = [
+      "auto"
+      "rw"
+      "nosuid"
+      "nofail"
+      "user"
+      "uid=1000"
+      "gid=100"
+      "exec"
+      "umask=022"
+    ];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
@@ -92,6 +106,11 @@
     };
     shell = {
       direnv.enable = true;
+      utils.enable = true;
+      code.cpp.enable = true;
+      code.python.enable = true;
+      code.haskell.enable = false;
+      latex.enable = true;
     };
     desktop = {
       enable = true;
@@ -103,4 +122,3 @@
     };
   };
 }
-

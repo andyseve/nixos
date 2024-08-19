@@ -7,42 +7,49 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    unstable,
-    hyprland,
-  }: let
-    system = "x86_64-linux";
-    upkgs = import unstable {
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      unstable,
+      hyprland,
+    }:
+    let
       system = "x86_64-linux";
-      config.allowUnfree = true;
-    };
-  in rec {
-    # output local functions defined in utils
-    lib = unstable.lib.extend (final: prev: {
-      myutils = import ./lib {lib = final;};
-    });
+      upkgs = import unstable {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+    in
+    rec {
+      # output local functions defined in utils
+      lib = unstable.lib.extend (
+        final: prev: { myutils = import ./lib { lib = final; }; }
+      );
 
-    nixosConfigurations = {
-      vesemir = lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit upkgs inputs; };
-        modules = [
-          ./default.nix
-          ./hosts/vesemir.nix
-          ./users/stranger.nix
-        ];
-      };
-      ziraeal = lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit upkgs inputs; };
-        modules = [
-          ./default.nix
-          ./hosts/ziraeal.nix
-          ./users/stranger.nix
-        ];
+      nixosConfigurations = {
+        vesemir = lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit upkgs inputs;
+          };
+          modules = [
+            ./default.nix
+            ./hosts/vesemir.nix
+            ./users/stranger.nix
+          ];
+        };
+        ziraeal = lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit upkgs inputs;
+          };
+          modules = [
+            ./default.nix
+            ./hosts/ziraeal.nix
+            ./users/stranger.nix
+          ];
+        };
       };
     };
-  };
 }
