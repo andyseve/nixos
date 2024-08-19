@@ -34,6 +34,15 @@
           ./users/stranger.nix
         ];
       };
+      ziraeal = lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit upkgs inputs; };
+        modules = [
+          ./default.nix
+          ./hosts/ziraeal.nix
+          ./users/stranger.nix
+        ];
+      };
     };
   };
 }

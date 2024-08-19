@@ -16,9 +16,6 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.plymouth.enable = true;
 
   # Timezone settings
   time.timeZone = "America/New_York";
@@ -58,7 +55,7 @@
   # networking
   networking.hostName = "vesemir";
   networking.interfaces.enp2s0f1.useDHCP = lib.mkDefault true;
-  networking.interfaces.wlp3s0f0.useDHCP = lib.mkDefault true;
+  networking.interfaces.wlp3s0f0.useDHCP = lib.mkDefault false;
 
   # Open ports in the firewall.
   networking.firewall.enable = true;
