@@ -5,12 +5,13 @@
   lib,
   pkgs,
   ...
-}: 
+}:
 
 with lib;
 let
   cfg = config.anish-sevekari-modules.hardware.nvidia;
-in {
+in
+{
   options.anish-sevekari-modules.hardware.nvidia = {
     enable = mkOption {
       description = "enable nvidia gpu drivers";
@@ -58,7 +59,7 @@ in {
         '')
       ];
     }
-    
+
     (mkIf (hasPrefix "legacy" cfg.type) {
       hardware.nvidia = {
         powerManagement.enable = false;

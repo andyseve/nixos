@@ -2,18 +2,18 @@
 
 {
   # Xserver settings
-	services.xserver = {
-		enable = true;
-		layout = "us";
-		# xkbOptions = "eurosign:e"
-		
-		libinput = {
-			enable = true;
+  services.xserver = {
+    enable = true;
+    layout = "us";
+    # xkbOptions = "eurosign:e"
+
+    libinput = {
+      enable = true;
       touchpad = {
         accelProfile = "flat";
         disableWhileTyping = true;
       };
-		};
+    };
 
     # Desktop
     desktopManager.xterm.enable = false;
@@ -30,33 +30,39 @@
 
     # Wacom
     wacom.enable = true;
-	};
+  };
 
   hardware.opengl.extraPackages = with pkgs; [ libva ];
 
-  environment.systemPackages = with pkgs; [	
+  environment.systemPackages = with pkgs; [
     # WindowManager Core
     xmobar
-    rofi rofi-pass
+    rofi
+    rofi-pass
     eww
-    picom                            # transparancy
-    dunst libnotify                  # notifications
+    picom # transparancy
+    dunst
+    libnotify # notifications
     feh
     xdotool
-    xorg.xmodmap xorg.xrandr xorg.libXinerama
-    scrot                            # screenshots
-    xclip 
+    xorg.xmodmap
+    xorg.xrandr
+    xorg.libXinerama
+    scrot # screenshots
+    xclip
     networkmanager_dmenu
 
     # Themes etc
-    papirus-icon-theme               # Papirus-icons
+    papirus-icon-theme # Papirus-icons
 
     # Desktop Programs
     firefox
     vlc
     zathura
     kitty
-    unstable.zoom-us slack discord
+    unstable.zoom-us
+    slack
+    discord
     pavucontrol
     unstable.dropbox
 

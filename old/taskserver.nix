@@ -1,8 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-	services.taskserver = {
-		enable = true;
+  services.taskserver = {
+    enable = true;
     fqdn = "asevekarlaptop.math.cmu.edu";
     listenHost = "::";
     listenPort = 53589;
@@ -10,5 +15,5 @@
     openFirewall = true;
 
     organisations.asevekar.users = [ "Anish Sevekari" ];
-	};
+  };
 }

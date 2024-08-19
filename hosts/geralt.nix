@@ -4,12 +4,13 @@
 # 3. Config - other customization options which are not covered my modules.
 # Host config and custom settings for geralt.
 
-{ 
+{
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   modules = {
     system = "x86_64-linux";
     hardware = {
@@ -26,4 +27,3 @@
     };
   };
 }
-

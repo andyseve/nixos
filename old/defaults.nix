@@ -7,7 +7,7 @@
   # iwlwifi settings
   # needed to stop multiple physical restarts.
   boot.extraModprobeConfig = ''
-  options iwlwifi 11n_disable=8
+    options iwlwifi 11n_disable=8
   '';
   # logitech
   # hardware.logitech.wireless.enable=true;
@@ -71,16 +71,24 @@
     # Drivers
     firmwareLinuxNonfree
 
-
     # Version Control / Archive
-    git 
-    unzip zip unrar
+    git
+    unzip
+    zip
+    unrar
 
     # Debug / Monitor / Analysis
-    htop iotop powertop iftop
-    ltrace strace
-    pciutils usbutils lshw
-    smartmontools lm_sensors
+    htop
+    iotop
+    powertop
+    iftop
+    ltrace
+    strace
+    pciutils
+    usbutils
+    lshw
+    smartmontools
+    lm_sensors
     dmidecode
 
     # Volume
@@ -88,15 +96,23 @@
 
     # Networking
     iputils
-    tor openvpn
-    wget curl rsync
-    networkmanager networkmanager-openvpn
+    tor
+    openvpn
+    wget
+    curl
+    rsync
+    networkmanager
+    networkmanager-openvpn
 
     # Linux shell utils
-    fzf silver-searcher autojump ripgrep # for grep and search
+    fzf
+    silver-searcher
+    autojump
+    ripgrep # for grep and search
     neofetch
     tree
-    tmux screen
+    tmux
+    screen
     pdftk
     btop
 
@@ -108,26 +124,24 @@
     ranger
     weechat
     unstable.neovim # load latest neovim
-    bat #better cat
-    taskwarrior timewarrior
-    khal khard # calendars and contacts
+    bat # better cat
+    taskwarrior
+    timewarrior
+    khal
+    khard # calendars and contacts
     unstable.vdirsyncer # vdirsyncer
-    fswebcam 
+    fswebcam
     pubs # biblography manager
-    (pass.withExtensions
-      (exts: [
-        exts.pass-otp 
-      ])
-    ) # password manager
+    (pass.withExtensions (exts: [ exts.pass-otp ])) # password manager
     unstable.yt-dlp # youtube downloader
     unstable.ytmdl # youtube music downloader and info
     imagemagick
     inkscape
 
-
     # Dev Tools
     gnumake
-    gcc ccls
+    gcc
+    ccls
     rustc
 
     python3
@@ -144,18 +158,19 @@
     unstable.haskellPackages.cabal-install
     unstable.haskellPackages.haskell-language-server
 
-    jdk11 nodejs
+    jdk11
+    nodejs
 
     nodePackages.pyright
     sumneko-lua-language-server
     rust-analyzer
 
-
     # Latex
     texlive.combined.scheme-full
 
     # Man Pages
-    man man-pages
+    man
+    man-pages
 
     # dotfiles
     # anish-dotfiles
@@ -171,10 +186,10 @@
 
   # hardware support
   hardware.bluetooth.enable = true;
-    # 32 bit support, required for steam -- check this
-    hardware.opengl.driSupport32Bit = true;
+  # 32 bit support, required for steam -- check this
+  hardware.opengl.driSupport32Bit = true;
 
-    programs = {
+  programs = {
     # zsh
     zsh = {
       enable = true;

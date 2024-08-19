@@ -4,22 +4,31 @@
 # 3. Config - other customization options which are not covered my modules.
 # Host config and custom settings for geralt.
 
-{ 
+{
   inputs,
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   # Boot settings
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "sr_mod"
+    "rtsx_pci_sdmmc"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   # Timezone settings
   time.timeZone = "America/New_York";
-  time.hardwareClockInLocalTime = false;  
+  time.hardwareClockInLocalTime = false;
 
   # Defining mount points
   # Mounting Home
@@ -27,26 +36,24 @@
     device = "/dev/disk/by-label/boot";
     fsType = "vfat";
   };
-  
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
 
-  fileSystems."/home" = { 
+  fileSystems."/home" = {
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
     options = [ "defaults" ];
   };
 
-  swapDevices = [
-    { device = "/dev/disk/by-lable/swap"; }
-  ];
+  swapDevices = [ { device = "/dev/disk/by-lable/swap"; } ];
 
   # Nvidia Prime Settings
   hardware.nvidia.prime = lib.mkDefault {
-      nvidiaBusId = "PCI:4:0:0";
-      intelBusId  = "PCI:0:2:0";
+    nvidiaBusId = "PCI:4:0:0";
+    intelBusId = "PCI:0:2:0";
   };
 
   nix.settings.max-jobs = lib.mkDefault 4;
@@ -98,4 +105,3 @@
     };
   };
 }
-

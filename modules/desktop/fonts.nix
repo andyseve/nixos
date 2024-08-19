@@ -10,7 +10,8 @@ with lib;
 let
   modules = config.anish-sevekari-modules;
   cfg = modules.desktop.fonts;
-in {
+in
+{
   options.anish-sevekari-modules.desktop.fonts = {
 
     enable = mkOption {
@@ -31,14 +32,25 @@ in {
 
   config = mkIf cfg.enable {
     fonts = {
-      packages = with pkgs; mkMerge [
-        [
-          noto-fonts noto-fonts-cjk noto-fonts-emoji
-          fira-code cascadia-code
-          (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "CascadiaCode" ]; })
-        ]
-        (mkIf cfg.marathi [ lohit-fonts.marathi ])
-      ];
+      packages =
+        with pkgs;
+        mkMerge [
+          [
+            noto-fonts
+            noto-fonts-cjk
+            noto-fonts-emoji
+            fira-code
+            cascadia-code
+            (nerdfonts.override {
+              fonts = [
+                "FiraCode"
+                "FiraMono"
+                "CascadiaCode"
+              ];
+            })
+          ]
+          (mkIf cfg.marathi [ lohit-fonts.marathi ])
+        ];
     };
   };
 }

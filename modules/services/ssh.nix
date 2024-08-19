@@ -6,9 +6,10 @@
 }:
 
 with lib;
-let 
+let
   cfg = config.anish-sevekari-modules.services.ssh;
-in {
+in
+{
   options.anish-sevekari-modules.services.ssh = {
     enable = mkOption {
       description = "enable ssh server";
@@ -50,7 +51,7 @@ in {
           # Config
           PrintLastLog yes
           TCPKeepAlive yes
-          '';
+        '';
       };
     }
 

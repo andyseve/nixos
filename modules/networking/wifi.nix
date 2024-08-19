@@ -8,7 +8,8 @@
 with lib;
 let
   cfg = config.anish-sevekari-modules.networking.wifi;
-in {
+in
+{
   options.anish-sevekari-modules.networking.wifi = {
 
     enable = mkOption {
@@ -22,7 +23,7 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.enable {
+    (mkIf cfg.enable {
       networking.wireless.iwd = {
         enable = true;
       };

@@ -11,7 +11,8 @@ with lib;
 let
   modules = config.anish-sevekari-modules;
   cfg = modules.desktop.wm;
-in {
+in
+{
   options.anish-sevekari-modules.desktop.wm = {
 
     xmonad.enable = mkOption {
@@ -32,7 +33,7 @@ in {
 
   config = mkMerge [
 
-    ( mkIf cfg.xmonad.enable {
+    (mkIf cfg.xmonad.enable {
       anish-sevekari-modules.desktop.enable = true;
       anish-sevekari-modules.desktop.xserver.enable = true;
       services = mkDefault {
@@ -40,7 +41,7 @@ in {
           windowManager.xmonad = {
             enable = true;
             enableContribAndExtras = true;
-            extraPackages = haskellPackages : [
+            extraPackages = haskellPackages: [
               haskellPackages.xmonad-contrib
               haskellPackages.xmonad-extras
               haskellPackages.xmonad
@@ -82,16 +83,19 @@ in {
       };
 
       environment.systemPackages = with pkgs; [
-        xmobar  # need a bar for xmonad
+        xmobar # need a bar for xmonad
         feh # pictures
-        dunst libnotify # notifications
+        dunst
+        libnotify # notifications
         rofi
         xdotool # xserver scripting
-        xorg.xmodmap xorg.xrandr xorg.libXinerama # xserver scripting
+        xorg.xmodmap
+        xorg.xrandr
+        xorg.libXinerama # xserver scripting
       ];
     })
 
-    ( mkIf cfg.hyprland.enable {
+    (mkIf cfg.hyprland.enable {
       anish-sevekari-modules.desktop.enable = true;
       programs.hyprland = {
         enable = true;
@@ -99,6 +103,13 @@ in {
         xwayland.enable = true;
       };
       environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+      environment.systemPackages = [
+        pkgs.waybar
+        pkgs.dunst
+        pkgs.libnotify
+        pkgs.rofi-wayland
+      ];
     })
 
   ];

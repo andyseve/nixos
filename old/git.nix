@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   users.users.git = {
@@ -7,9 +12,12 @@
     home = "/home/git";
     description = "User that manages git";
     extraGroups = [ "git" ];
-    createHome = true;  
-		shell = "${pkgs.git}/bin/git-shell";	
+    createHome = true;
+    shell = "${pkgs.git}/bin/git-shell";
     group = "git";
   };
-	users.groups.git.members = [ "git" "stranger" ];
+  users.groups.git.members = [
+    "git"
+    "stranger"
+  ];
 }

@@ -10,7 +10,8 @@ with lib;
 let
   modules = config.anish-sevekari-modules;
   cfg = modules.desktop.xserver;
-in {
+in
+{
   options.anish-sevekari-modules.desktop.xserver = {
 
     enable = mkOption {
