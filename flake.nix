@@ -17,7 +17,7 @@
     let
       system = "x86_64-linux";
       upkgs = import unstable {
-        system = "x86_64-linux";
+        inherit system;
         config.allowUnfree = true;
       };
     in

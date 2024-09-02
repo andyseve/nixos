@@ -5,7 +5,6 @@
 # Host config and custom settings for geralt.
 
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -71,7 +70,7 @@
 
   # networking
   networking.hostName = "ziraeal";
-  networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
+  networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
 
   # Open ports in the firewall.
   networking.firewall.enable = true;

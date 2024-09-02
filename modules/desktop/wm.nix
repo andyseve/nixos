@@ -36,6 +36,7 @@ in
     (mkIf cfg.xmonad.enable {
       anish-sevekari-modules.desktop.enable = true;
       anish-sevekari-modules.desktop.xserver.enable = true;
+
       services = mkDefault {
         xserver = {
           windowManager.xmonad = {
@@ -97,6 +98,8 @@ in
 
     (mkIf cfg.hyprland.enable {
       anish-sevekari-modules.desktop.enable = true;
+      anish-sevekari-modules.desktop.wayland.enable = true;
+
       programs.hyprland = {
         enable = true;
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;

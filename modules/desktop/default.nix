@@ -46,19 +46,22 @@ in
       # modules.desktop.wm.${cfg.wm.default}.enable = true;
       # modules.desktop.dm.${cfg.dm.default}.enable = true;
 
-      environment.systemPackages = [
-        pkgs.firefox
-        pkgs.vlc
-        pkgs.zathura
-        pkgs.kitty
-
-        upkgs.zoom-us
-        upkgs.slack
-        upkgs.discord
-
-        pkgs.streamlink
-        pkgs.playerctl
-      ];
+      environment.systemPackages =
+        [
+          pkgs.firefox
+          pkgs.vlc
+          pkgs.zathura
+          pkgs.kitty
+        ]
+        ++ [
+          upkgs.zoom-us
+          upkgs.slack
+          upkgs.discord
+        ]
+        ++ [
+          pkgs.streamlink
+          pkgs.playerctl
+        ];
     })
 
     # ( mkIf (cfg.enable && cfg.xserver.enable) {

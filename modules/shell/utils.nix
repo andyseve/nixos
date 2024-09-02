@@ -36,6 +36,7 @@ in
         default = false;
       };
     };
+
     latex.enable = mkOption {
       description = "enable latex";
       type = types.bool;
@@ -57,11 +58,13 @@ in
           btop
           pciutils
           usbutils
+          iputils
         ]
         ++ [
+          bat
           tree
           ranger
-          upkgs.python3Packages.argcomplete
+          python3Packages.argcomplete
         ]
         ++ [
           wget
@@ -69,7 +72,9 @@ in
           rsync
         ]
         ++ [
+          fzf
           ripgrep
+          autojump
           silver-searcher
         ]
         ++ [
