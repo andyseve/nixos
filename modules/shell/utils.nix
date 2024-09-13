@@ -89,6 +89,8 @@ in
       environment.systemPackages = with pkgs; [
         gnumake
         gcc
+        llvm
+        clang
       ];
     })
 
