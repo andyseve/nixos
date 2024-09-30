@@ -11,8 +11,7 @@
   ...
 }:
 {
-  modules = {
-    system = "x86_64-linux";
+  anish-sevekari-modules = {
     hardware = {
       nvidia.enable = true;
       nvidia.type = "stable";
@@ -25,5 +24,7 @@
     shell = {
       direnv.enable = true;
     };
+    env.xdg = true;
+    env.zsh = true;
   };
 }

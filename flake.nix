@@ -50,6 +50,17 @@
             ./users/stranger.nix
           ];
         };
+				geralt = lib.nixosSystem {
+					inherit system;
+					specialArgs = {
+						inherit upkgs inputs;
+					};
+					modules = [
+						./default.nix
+						./hosts/geralt.nix
+						./users/stranger.nix
+					];
+				};
       };
     };
 }
