@@ -2,13 +2,7 @@
 
 let
   inherit (builtins) readDir pathExists concatLists;
-  inherit (lib)
-    hasSuffix
-    mapAttrs
-    mapAttrsToList
-    concatMapAttrs
-    filterAttrs
-    ;
+  inherit (lib) hasSuffix mapAttrs mapAttrsToList concatMapAttrs filterAttrs;
 in
 rec {
   # lists all the paths in dir
