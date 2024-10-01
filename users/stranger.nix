@@ -1,16 +1,28 @@
 # user settings
-{ config, pkgs, ... }:
-{
-  users.users.stranger = {
-    isNormalUser = true;
-    home = "/home/stranger";
-    description = "Anish Sevekari";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "video"
-    ]; # Enable ‘sudo’ for the user.
-    createHome = true;
-    shell = "${pkgs.zsh}/bin/zsh";
-  };
+{lib, hostConfig, ... }:
+let
+	home = if hostConfig?home then hostConfig.home else "/home";
+	username = "stranger";
+	name = "Anish Sevekari";
+	shell = "zsh";
+in rec {
+	userConfig = { config, lib, pkgs, ... }: {
+		users.users.${username} = {
+			isNormalUser = true;
+			home = "${home}/${username}";
+			description = name;
+			createHome = true;
+			shell = "${pkgs.${shell}}/bin/${shell}";
+		};
+	};
+
+	homeConfig = { config, lib, pkgs, home-manager, ... }: {
+		home-manager = {
+			useGlobalPkgs = true;
+			useUserPkgs = true;
+			backupFileExtension = "bak";
+			extraSpecialArgs = {}
+			users.${username}.imports = [];
+		};
+	};
 }
