@@ -1,9 +1,9 @@
 { lib, ... }:
 let
   inherit (lib) makeExtensible;
-  myutils = makeExtensible (self: with self; import ./attrs.nix { inherit lib; });
+  utils = makeExtensible (self: with self; import ./attrs.nix { inherit lib; });
 in
-myutils.extend (
+utils.extend (
   self: super: {
     host = import ./host.nix { inherit lib; };
     module = import ./modules.nix { inherit lib; };
