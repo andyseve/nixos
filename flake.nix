@@ -4,7 +4,18 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+		# Hyprland compositor for wayland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+
+		# Manages configs and home directory
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+		# Controls system level software and settings for macos
+    darwin.url = "github:lnl7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -51,5 +62,10 @@
           ];
         };
       };
+
+			darwinConfiguration = {
+				ziraeal = inputs.darwin.lib.darwinSystem 
+			};
+      
     };
 }
