@@ -2,16 +2,17 @@
 # Reads settings from ../hosts/${hostname}.nix file to generate nixosSystem object
 { lib, ... }:
 let
-	mkUser = import ./user.nix { inherit lib; };
+	inherit (import ./user.nix { inherit lib; }) mkUser;
 	wslDefault = { config, ... }: {
 		wsl.enable = true;
+		wsl.nativeSystemd = true;
 	};
 	homeDefault = { config, ... }: {
 		home-manager = {
 			useGlobalPkgs = true;
-			useUserPkgs = true;
+			useUserPackages = true;
 			backupFileExtension = "bak";
-			extraSpecialArgs = {}
+			extraSpecialArgs = {};
 		};
 	};
 in
@@ -33,14 +34,17 @@ in
 					system = hostConfig.system;
 					config.allowUnfree = hostConfig.unfree;
 				};
+				home-manager = inputs.home-manager;
+				nixos-wsl = inputs.nixos-wsl;
 			};
 			modules = [
 				inputs.nixos-wsl.nixosModules.default
 				wslDefault
 				inputs.home-manager.nixosModules.home-manager
-				homeDefault
+				# homeDefault
 				hostConfig.wslConfig
-			] ++ (builtins.map (mkUser hostConfig) hostConfig.users);
+			# ];
+			] ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users));
 		};
 		darwinConfig = inputs : inputs.darwin.lib.darwinSystem {
 			system = hostConfig.system;
@@ -57,9 +61,9 @@ in
 			};
 			modules = [
 				inputs.home-manager.darwinModules.home-manager
-				homeDefault
+				# homeDefault
 				hostConfig.darwinConfig
-			] ++ (builtins.map (mkUser hostConfig) hostConfig.users);
+			] ++ lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users);
 		};
 		nixosConfig = inputs : inputs.nixpkgs.lib.nixosSystem {
 			system = hostConfig.system;
@@ -75,14 +79,20 @@ in
 				};
 			};
 			modules = [
-				homeDefault
-				hostConfig.hardwareConfig
-			] ++ (builtins.map (mkUser hostConfig) hostConfig.users);
+				# homeDefault
+				hostConfig.nixosConfig
+			] ++ lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users);
 		};
   in
-		{
-			wslConfig = wslConfig;
-			darwinConfig = darwinConfig;
-			nixosConfig = nixosConfig;
-		};
+		{ } 
+		// (if hostConfig?wsl && hostConfig.wsl then { wslConfig = wslConfig;} else {})
+		// (if hostConfig?darwin && hostConfig.darwin then { darwinConfig = darwinConfig; } else {})
+		// (if hostConfig?nixos  && hostConfig.nixos then { nixosConfig = nixosConfig; } else {});
+
+	mkHostNixos = inputs: acc: hostname: configs: acc
+	// (if configs?wslConfig then { "${hostname}-wsl" = (configs.wslConfig inputs); } else {})
+	// (if configs?nixosConfig then { ${hostname} = (configs.nixosConfig inputs); } else {});
+
+	mkHostDarwin = inputs: acc: hostname: configs: acc 
+	// (if configs?darwinConfig then { ${hostname} = (configs.darwinConfig inputs); } else {});
 }

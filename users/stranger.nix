@@ -16,19 +16,6 @@ in rec {
 		};
 	};
 
-	homeConfig = { config, lib, pkgs, home-manager, ... }: {
-		home.stateVersion = "24.05";
-		home.sessionVariables = {
-			PAGER = "less";
-			EDITOR = "nvim";
-			XDG_CACHE_HOME = "$HOME/.cache";
-			XDG_CONFIG_HOME = "$HOME/.config";
-			XDG_DATA_HOME = "$HOME/.local/share";
-			XDG_STATE_HOME = "$HOME/.local/state";
-			ZDOTDIR = "$XDG_CONFIG_HOME/zsh";
-			HISTFILE = "$ZDOTDIR/zsh_history";
-		};
-		home-manager.users.${username}.imports = [
-		];
+	homeConfig = { config, lib, pkgs, ... }: {
 	};
 }

@@ -1,8 +1,9 @@
-# Host information file for Geralt
+# Host information file for geralt
 { lib, ... }:
 rec {
 	system = "x86_64-linux";
 	wsl = true;
+	nixos = true;
 	hardware = {
 		nvidia.enable = true;
 		nvidia.type = "stable";
@@ -25,7 +26,7 @@ rec {
 	};
 	users = [ "stranger" ];
 
-	hardwareConfig = { config, lib, pkgs, ... }: {
+	nixosConfig = { config, lib, pkgs, ... }: {
 		# Basic hardware configuration like disks, timezones, networking etc.
 		# Only used when natively running on nixos
 	};
