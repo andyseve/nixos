@@ -76,8 +76,8 @@ in rec {
               (homeDefault inputs)
               hostConfig.wslConfig
             ]
-            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-            ++ (listModules' (toString ../base));
+            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users));
+            # ++ (listModules' (toString ../base));
         };
 
       darwinConfig =
