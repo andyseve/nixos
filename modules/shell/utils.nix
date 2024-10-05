@@ -1,51 +1,18 @@
 {
   config,
-  options,
+  hostConfig,
   lib,
+  options,
   pkgs,
   upkgs,
   ...
 }:
-
-with lib;
 let
-  cfg = config.anish-sevekari-modules.shell;
+  inherit (lib) mkIf mkMerge;
+  cfg = hostConfig.shell;
 in
 {
-  options.anish-sevekari-modules.shell = {
-    utils.enable = mkOption {
-      description = "enable utils";
-      type = types.bool;
-      default = true;
-    };
-
-    code = {
-      cpp.enable = mkOption {
-        description = "enable cpp";
-        type = types.bool;
-        default = false;
-      };
-      python.enable = mkOption {
-        description = "enable python";
-        type = types.bool;
-        default = false;
-      };
-      haskell.enable = mkOption {
-        description = "enable cpp";
-        type = types.bool;
-        default = false;
-      };
-    };
-
-    latex.enable = mkOption {
-      description = "enable latex";
-      type = types.bool;
-      default = false;
-    };
-  };
-
   config = mkMerge [
-
     (mkIf cfg.utils.enable {
       environment.systemPackages =
         with pkgs;

@@ -1,11 +1,11 @@
 {
+  hostConfig,
   config,
   options,
   lib,
   pkgs,
   ...
 }:
-
 with lib;
 let
   modules = config.anish-sevekari-modules;
@@ -36,11 +36,6 @@ in
         with pkgs;
         mkMerge [
           [
-            noto-fonts
-            noto-fonts-cjk
-            noto-fonts-emoji
-            fira-code
-            cascadia-code
             (nerdfonts.override {
               fonts = [
                 "FiraCode"

@@ -1,45 +1,18 @@
 {
-  inputs,
   config,
-  options,
+  hostConfig,
   lib,
+  options,
   pkgs,
   upkgs,
   ...
 }:
 
-with lib;
-with lib.myutils;
 let
-  modules = config.anish-sevekari-modules;
-  cfg = modules.desktop;
+  inherit (lib) mkMerge mkIf;
+  cfg = hostConfig.desktop;
 in
 {
-  options.anish-sevekari-modules.desktop = {
-
-    enable = mkOption {
-      description = "Enables desktop environment";
-      type = types.bool;
-      default = false;
-      example = true;
-    };
-
-    # dm.default = mkOption {
-    #   description = "Default desktop manager";
-    #   type = types.str;
-    #   default = "";
-    #   example = "lightdm";
-    # };
-    #
-    # wm.default = mkOption {
-    #   description = "Default window manager";
-    #   type = types.str;
-    #   default = "";
-    #   example = "xmonad";
-    # };
-
-  };
-
   config = mkMerge [
 
     (mkIf cfg.enable {
@@ -55,7 +28,7 @@ in
         ]
         ++ [
           pkgs.vscode
-          (pkgs.vscode-with-extensions.override{
+          (pkgs.vscode-with-extensions.override {
             vscodeExtensions = with pkgs.vscode-extensions; [
               jnoortheen.nix-ide
               ms-python.python
