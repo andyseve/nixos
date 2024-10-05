@@ -11,7 +11,7 @@ let
 			useGlobalPkgs = true;
 			useUserPkgs = true;
 			backupFileExtension = "bak";
-			extraSpecialArgs = {}
+			extraSpecialArgs = {};
 		};
 	};
 in
