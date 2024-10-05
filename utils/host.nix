@@ -14,75 +14,132 @@ let
 			extraSpecialArgs = {};
 		};
 	};
-in
-{
+in rec {
   # mkHost reads from hosts/${hostname}.nix file and creates a nixos config
-	# input variables define the compilation environment, the files are loaded accordingly.
-  mkHost = hostname : let
-    hostConfig = if lib.hasSuffix ".nix" hostname then (import hostname { inherit lib; })
-			else (import ../hosts/${hostname}.nix { inherit lib; });
-		wslConfig = inputs : inputs.nixpkgs.lib.nixosSystem {
-			system = hostConfig.system;
-			pkgs = import inputs.nixpkgs {
-				system = hostConfig.system;
-				config.allowUnfree = hostConfig.unfree;
-			};
-			specialArgs = {
-				inherit hostConfig;
-				upkgs = import inputs.unstable {
-					system = hostConfig.system;
-					config.allowUnfree = hostConfig.unfree;
-				};
-			};
-			modules = [
-				inputs.nixos-wsl.nixosModules.default
-				wslDefault
-				inputs.home-manager.nixosModules.home-manager
-				homeDefault
-				hostConfig.wslConfig
-			] ++ (builtins.map (mkUser hostConfig) hostConfig.users);
-		};
-		darwinConfig = inputs : inputs.darwin.lib.darwinSystem {
-			system = hostConfig.system;
-			pkgs = import inputs.nixpkgs {
-				system = hostConfig.system;
-				config.allowUnfree = hostConfig.unfree;
-			};
-			specialArgs = {
-				inherit hostConfig;
-				upkgs = import inputs.unstable {
-					system = hostConfig.system;
-					config.allowUnfree = hostConfig.unfree;
-				};
-			};
-			modules = [
-				inputs.home-manager.darwinModules.home-manager
-				homeDefault
-				hostConfig.darwinConfig
-			] ++ (builtins.map (mkUser hostConfig) hostConfig.users);
-		};
-		nixosConfig = inputs : inputs.nixpkgs.lib.nixosSystem {
-			system = hostConfig.system;
-			pkgs = import inputs.nixpkgs {
-				system = hostConfig.system;
-				config.allowUnfree = hostConfig.unfree;
-			};
-			specialArgs = {
-				inherit hostConfig;
-				upkgs = import inputs.unstable {
-					system = hostConfig.system;
-					config.allowUnfree = hostConfig.unfree;
-				};
-			};
-			modules = [
-				homeDefault
-				hostConfig.hardwareConfig
-			] ++ (builtins.map (mkUser hostConfig) hostConfig.users);
-		};
-  in
-		{
-			wslConfig = wslConfig;
-			darwinConfig = darwinConfig;
-			nixosConfig = nixosConfig;
-		};
+  # input variables define the compilation environment, the files are loaded accordingly.
+  mkHost =
+    hostname:
+    let
+      inherit (import ./user.nix { inherit lib; }) mkUser;
+      inherit (import ./modules.nix { inherit lib; }) listModules';
+      hostConfig =
+        if lib.hasSuffix ".nix" hostname then
+          (import hostname { inherit lib; })
+        else
+          (import ../hosts/${hostname}.nix { inherit lib; });
+      wslDefault =
+        { config, ... }:
+        {
+          wsl.enable = true;
+          wsl.nativeSystemd = true;
+        };
+      homeDefault =
+        inputs:
+        { config, ... }:
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "bak";
+            extraSpecialArgs = {
+              inherit hostConfig;
+            };
+          };
+        };
+
+      wslConfig =
+        inputs:
+        inputs.nixpkgs.lib.nixosSystem {
+          system = hostConfig.system;
+          pkgs = import inputs.nixpkgs {
+            system = hostConfig.system;
+            config.allowUnfree = hostConfig.unfree;
+          };
+          specialArgs = {
+            inherit hostConfig;
+            upkgs = import inputs.unstable {
+              system = hostConfig.system;
+              config.allowUnfree = hostConfig.unfree;
+            };
+            home-manager = inputs.home-manager;
+            nixos-wsl = inputs.nixos-wsl;
+            darwin = inputs.darwin;
+            isWSL = true;
+            isDarwin = false;
+            isNixos = false;
+          };
+          modules =
+            [
+              inputs.nixos-wsl.nixosModules.default
+              wslDefault
+              inputs.home-manager.nixosModules.home-manager
+              (homeDefault inputs)
+              hostConfig.wslConfig
+            ]
+            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+            ++ (listModules' (toString ../base));
+        };
+
+      darwinConfig =
+        inputs:
+        inputs.darwin.lib.darwinSystem {
+          system = hostConfig.system;
+          pkgs = import inputs.nixpkgs {
+            system = hostConfig.system;
+            config.allowUnfree = hostConfig.unfree;
+          };
+          specialArgs = {
+            inherit hostConfig;
+            upkgs = import inputs.unstable {
+              system = hostConfig.system;
+              config.allowUnfree = hostConfig.unfree;
+            };
+
+          };
+          modules = [
+            inputs.home-manager.darwinModules.home-manager
+            homeDefault
+            hostConfig.darwinConfig
+          ]
+	  ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+	  ++ (listModules' (toString ../base));
+        };
+
+      nixosConfig =
+        inputs:
+        inputs.nixpkgs.lib.nixosSystem {
+          system = hostConfig.system;
+          pkgs = import inputs.nixpkgs {
+            system = hostConfig.system;
+            config.allowUnfree = hostConfig.unfree;
+          };
+          specialArgs = {
+            inherit hostConfig;
+            upkgs = import inputs.unstable {
+              system = hostConfig.system;
+              config.allowUnfree = hostConfig.unfree;
+            };
+          };
+          modules = [
+            homeDefault
+            hostConfig.nixosConfig
+          ]
+	  ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+	  ++ (listModules' (toString ../base));
+        };
+    in
+    { }
+    // (if hostConfig ? wsl && hostConfig.wsl then { wslConfig = wslConfig; } else { })
+    // (if hostConfig ? darwin && hostConfig.darwin then { darwinConfig = darwinConfig; } else { })
+    // (if hostConfig ? nixos && hostConfig.nixos then { nixosConfig = nixosConfig; } else { });
+
+  mkHostNixos =
+    inputs: acc: hostname: configs:
+    acc
+    // (if configs ? wslConfig then { "${hostname}-wsl" = (configs.wslConfig inputs); } else { })
+    // (if configs ? nixosConfig then { ${hostname} = (configs.nixosConfig inputs); } else { });
+
+  mkHostDarwin =
+    inputs: acc: hostname: configs:
+    acc // (if configs ? darwinConfig then { ${hostname} = (configs.darwinConfig inputs); } else { });
 }

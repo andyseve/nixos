@@ -2,7 +2,13 @@
 
 let
   inherit (builtins) readDir pathExists concatLists;
-  inherit (lib) hasSuffix mapAttrs mapAttrsToList concatMapAttrs filterAttrs;
+  inherit (lib)
+    hasSuffix
+    mapAttrs
+    mapAttrsToList
+    concatMapAttrs
+    filterAttrs
+    ;
 in
 rec {
   # lists all the paths in dir
@@ -14,17 +20,13 @@ rec {
       default = pathExists "${toString dir}/default.nix";
       contents = readDir dir;
       directories = filterAttrs (name: value: value == "directory") contents;
-      files = filterAttrs (
-        name: value: value == "regular" && hasSuffix ".nix" name
-      ) contents;
+      files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents;
     in
     if default == true then
       [ "${toString dir}/default.nix" ]
     else
       mapAttrsToList (name: value: "${toString dir}/${name}") files
-      ++ concatLists (
-        mapAttrsToList (name: value: listModules "${toString dir}/${name}") directories
-      );
+      ++ concatLists (mapAttrsToList (name: value: listModules "${toString dir}/${name}") directories);
 
   # same function as above, but does not treat default.nix differently
   listModules' =
@@ -32,14 +34,10 @@ rec {
     let
       contents = readDir dir;
       directories = filterAttrs (name: value: value == "directory") contents;
-      files = filterAttrs (
-        name: value: value == "regular" && hasSuffix ".nix" name
-      ) contents;
+      files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents;
     in
     mapAttrsToList (name: value: "${toString dir}/${name}") files
-    ++ concatLists (
-      mapAttrsToList (name: value: listModules' "${toString dir}/${name}") directories
-    );
+    ++ concatLists (mapAttrsToList (name: value: listModules' "${toString dir}/${name}") directories);
 
   # maps a function fn on all files and directories in dir and returns values as a attrset
   # if a subdirectory contains default.nix then only function is only applied to that file.
@@ -51,17 +49,13 @@ rec {
       default = pathExists "${toString dir}/default.nix";
       contents = readDir dir;
       directories = filterAttrs (name: value: value == "directory") contents;
-      files = filterAttrs (
-        name: value: value == "regular" && hasSuffix ".nix" name
-      ) contents;
+      files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents;
     in
     if default == true then
       { "${toString dir}/default.nix" = (fn "${toString dir}/default.nix"); }
     else
       mapAttrs (name: value: (fn "${toString dir}/${name}")) files
-      // concatMapAttrs (
-        name: value: mapModules fn "${toString dir}/${name}"
-      ) directories;
+      // concatMapAttrs (name: value: mapModules fn "${toString dir}/${name}") directories;
 
   # same function as above, but does not treat default.nix differently
   mapModules' =
@@ -69,12 +63,8 @@ rec {
     let
       contents = readDir dir;
       directories = filterAttrs (name: value: value == "directory") contents;
-      files = filterAttrs (
-        name: value: value == "regular" && hasSuffix ".nix" name
-      ) contents;
+      files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) contents;
     in
     mapAttrs (name: value: (fn "${toString dir}/${name}")) files
-    // concatMapAttrs (
-      name: value: mapModules' fn "${toString dir}/${name}"
-    ) directories;
+    // concatMapAttrs (name: value: mapModules' fn "${toString dir}/${name}") directories;
 }
