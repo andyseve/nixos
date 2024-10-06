@@ -1,42 +1,27 @@
 # user settings
-{ lib, hostConfig, ... }:
-let
+{ lib, hostConfig, ... }: rec {
   home = if hostConfig ? home then hostConfig.home else "/home";
   username = "stranger";
   name = "Anish Sevekari";
   shell = "zsh";
-in
-rec {
   userConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    {
+    { config, lib, pkgs, isDarwin, isNixos, ... }: {
       users.users.${username} = {
-        isNormalUser = true;
-        home = "${home}/${username}";
-        extraGroups = [ "wheel" ];
         description = name;
-        createHome = true;
         shell = "${pkgs.${shell}}/bin/${shell}";
-      };
+	home = if isDarwin then "/Users/${username}" else "${home}/${username}";
+	} // (if isNixos then {
+		isNormalUser = true;
+		extraGroups = [ "wheel" ];
+		createHome = true;
+	} else {});
     };
 
-  homeConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    {
+  homeConfig = { config, lib, pkgs, isDarwin, ... }: {
       home-manager.users.${username} = {
         home = {
-          username = "${username}";
-          homeDirectory = "${home}/${username}";
+		inherit username;
+          homeDirectory = if isDarwin then "/Users/${username}" else "${home}/${username}";
           stateVersion = "24.05";
         };
         programs.home-manager.enable = true;

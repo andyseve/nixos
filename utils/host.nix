@@ -2,18 +2,7 @@
 # Reads settings from ../hosts/${hostname}.nix file to generate nixosSystem object
 { lib, ... }:
 let
-	mkUser = import ./user.nix { inherit lib; };
-	wslDefault = { config, ... }: {
-		wsl.enable = true;
-	};
-	homeDefault = { config, ... }: {
-		home-manager = {
-			useGlobalPkgs = true;
-			useUserPkgs = true;
-			backupFileExtension = "bak";
-			extraSpecialArgs = {};
-		};
-	};
+mkUser = import ./user.nix { inherit lib; };
 in rec {
   # mkHost reads from hosts/${hostname}.nix file and creates a nixos config
   # input variables define the compilation environment, the files are loaded accordingly.
@@ -76,8 +65,8 @@ in rec {
               (homeDefault inputs)
               hostConfig.wslConfig
             ]
-            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users));
-            # ++ (listModules' (toString ../base));
+            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+            ++ (listModules' (toString ../base));
         };
 
       darwinConfig =
@@ -94,12 +83,17 @@ in rec {
               system = hostConfig.system;
               config.allowUnfree = hostConfig.unfree;
             };
-
+            home-manager = inputs.home-manager;
+            nixos-wsl = inputs.nixos-wsl;
+            darwin = inputs.darwin;
+            isWSL = false;
+            isDarwin = true;
+            isNixos = false;
           };
           modules = [
             inputs.home-manager.darwinModules.home-manager
-            homeDefault
-            hostConfig.darwinConfig
+            # homeDefault
+            # hostConfig.darwinConfig
           ]
 	  ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
 	  ++ (listModules' (toString ../base));

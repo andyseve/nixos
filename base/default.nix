@@ -1,11 +1,11 @@
 {
   config,
+	isDarwin,
   lib,
   options,
   pkgs,
   ...
-}:
-{
+}: {
   # Basic Nix configuration
   nix = {
     # flakes
@@ -36,11 +36,23 @@
     # Garbage Collector
     gc = {
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
+			interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      options = "--delete-older-than 30d";
     };
   };
 
+	services = lib.mkIf isDarwin { nix-daemon.enable = true; };
+
+	environment.systemPackages = [
+		pkgs.coreutils
+		pkgs.curl
+		pkgs.git
+		pkgs.ripgrep
+		pkgs.wget
+		pkgs.neovim
+	];
+
+	# enable nix daemon on apple
   # system settings
-  system.stateVersion = lib.mkDefault "24.05";
+  system.stateVersion = if isDarwin then 5 else lib.mkDefault "24.05";
 }
