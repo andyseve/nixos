@@ -1,13 +1,14 @@
 {
   config,
-  options,
+  hostConfig,
   lib,
+  options,
   pkgs,
   ...
 }:
 
-with lib;
 let
+	inherit (lib) mkIf;
   cfg = config.anish-sevekari-modules.shell.direnv;
 in
 {

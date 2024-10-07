@@ -35,13 +35,15 @@
 
     # Garbage Collector
     gc = {
-      automatic = true;
-			interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      automatic = lib.mkDefault true;
       options = "--delete-older-than 30d";
-    };
+    } // (if isDarwin then {
+    	interval = { Weekday = 0; Hour = 2; Minute = 0; };
+    } else {
+    	dates = "weekly";
+    });
   };
 
-	services = lib.mkIf isDarwin { nix-daemon.enable = true; };
 
 	environment.systemPackages = [
 		pkgs.coreutils
@@ -55,4 +57,7 @@
 	# enable nix daemon on apple
   # system settings
   system.stateVersion = if isDarwin then 5 else lib.mkDefault "24.05";
-}
+} // (if isDarwin then {
+	# darwin specific options
+	services = lib.mkIf isDarwin { nix-daemon.enable = true; };
+	} else {})

@@ -9,30 +9,29 @@
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = hostConfig.shell;
+  cfg = hostConfig.shell.utils or {};
 in
 {
   config = mkMerge [
-    (mkIf cfg.utils.enable {
+    (mkIf (cfg.utils.enable or false) {
       environment.systemPackages =
         with pkgs;
-        [ git ]
+        [ git ] # Version Control
         ++ [
           zip
           unzip
-        ]
+        ] # archieves
         ++ [
           btop
           pciutils
           usbutils
           iputils
-        ]
+        ] # monitoring tools
         ++ [
           bat
           tree
           ranger
-          python3Packages.argcomplete
-        ]
+        ] # file tools
         ++ [
           wget
           curl
@@ -43,7 +42,10 @@ in
           ripgrep
           autojump
           silver-searcher
-        ]
+        ] # search tools
+        ++ [
+		python3Packages.argcomplete
+	] # completion
         ++ [
           tmux
           screen
@@ -52,7 +54,7 @@ in
 
     })
 
-    (mkIf cfg.code.cpp.enable {
+    (mkIf (cfg.code.cpp.enable or false) {
       environment.systemPackages = with pkgs; [
         gnumake
         gcc
@@ -61,7 +63,7 @@ in
       ];
     })
 
-    (mkIf cfg.code.python.enable {
+    (mkIf (cfg.code.python.enable or false) {
       environment.systemPackages = with pkgs; [
         python3
         python3Packages.numpy
@@ -69,14 +71,14 @@ in
       ];
     })
 
-    (mkIf cfg.code.haskell.enable {
+    (mkIf (cfg.code.haskell.enable or false) {
       environment.systemPackages = with pkgs; [
         haskellPackages.ghc
         haskellPackages.hoogle
       ];
     })
 
-    (mkIf cfg.latex.enable {
+    (mkIf (cfg.latex.enable or false) {
       environment.systemPackages = with pkgs; [
         texliveFull
         texlivePackages.biber

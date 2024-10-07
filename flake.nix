@@ -33,6 +33,7 @@
     utils = import ./utils { lib = inputs.nixpkgs.lib; };
     hostnames = utils.fileNames (toString ./hosts);
     usernames = utils.fileNames (toString ./users);
+    modules = utils.listModules' (toString ./base);
     nixosConfigurations = inputs.nixpkgs.lib.foldlAttrs (utils.mkHostNixos inputs) { } (
       inputs.nixpkgs.lib.mapAttrs (name: value: utils.mkHost name) hostnames
     );
