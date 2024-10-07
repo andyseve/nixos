@@ -9,18 +9,10 @@
 
 let
 	inherit (lib) mkIf;
-  cfg = config.anish-sevekari-modules.shell.direnv;
+  cfg = hostConfig.shell.direnv or {};
 in
 {
-  options.anish-sevekari-modules.shell.direnv = {
-    enable = mkOption {
-      description = "enable direnv";
-      type = types.bool;
-      default = false;
-    };
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable or false) {
     programs.direnv.enable = true;
     environment.systemPackages = [ pkgs.direnv ];
   };

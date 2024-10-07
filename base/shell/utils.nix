@@ -9,7 +9,7 @@
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = hostConfig.shell.utils or {};
+  cfg = hostConfig.shell or {};
 in
 {
   config = mkMerge [
