@@ -92,8 +92,8 @@ in rec {
           };
           modules = [
             inputs.home-manager.darwinModules.home-manager
-            # homeDefault
-            # hostConfig.darwinConfig
+            (homeDefault inputs)
+            hostConfig.darwinConfig
           ]
 	  ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
 	  ++ (listModules' (toString ../base));
@@ -113,9 +113,16 @@ in rec {
               system = hostConfig.system;
               config.allowUnfree = hostConfig.unfree;
             };
+            home-manager = inputs.home-manager;
+            nixos-wsl = inputs.nixos-wsl;
+            darwin = inputs.darwin;
+            isWSL = false;
+            isDarwin = false;
+            isNixos = true;
           };
           modules = [
-            homeDefault
+        	inputs.home-manager.nixosModules.home-manager
+            (homeDefault inputs)
             hostConfig.nixosConfig
           ]
 	  ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
@@ -131,9 +138,9 @@ in rec {
     inputs: acc: hostname: configs:
     acc
     // (if configs ? wslConfig then { "${hostname}-wsl" = (configs.wslConfig inputs); } else { })
-    // (if configs ? nixosConfig then { ${hostname} = (configs.nixosConfig inputs); } else { });
+    // (if configs ? nixosConfig then { "${hostname}" = (configs.nixosConfig inputs); } else { });
 
   mkHostDarwin =
     inputs: acc: hostname: configs:
-    acc // (if configs ? darwinConfig then { ${hostname} = (configs.darwinConfig inputs); } else { });
+    acc // (if configs ? darwinConfig then { "${hostname}" = (configs.darwinConfig inputs); } else { });
 }

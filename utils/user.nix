@@ -13,20 +13,12 @@
 					description = userConfig.name;
 					shell = pkgs.${userConfig.shell};
 					home = if isDarwin then "/Users/${username}" else "${userConfig.home}/${username}";
+					packages = [ pkgs.home-manager ];
 				} // (if isNixos then {
 					isNormalUser = true;
 					extraGroups = [ "wheel" ];
 				} else {});
 			})
-      (if userConfig?homeConfig then userConfig.homeConfig else { config, isDarwin, ... }: {
-				home-manager.users.${username} = {
-					home = {
-						inherit username;
-						homeDirectory = if isDarwin then "/Users/${username}" else "${userConfig.home}/${username}";
-						stateVersion = "24.05";
-					};
-					programs.home-manager.enable = true;
-				};
-			})
+      (if (userConfig?homeConfig && userConfig?home-manager-module && userConfig.home-manager-module) then userConfig.homeConfig else {})
     ];
 }

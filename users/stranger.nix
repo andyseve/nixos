@@ -17,7 +17,9 @@
 	} else {});
     };
 
-  homeConfig = { config, lib, pkgs, isDarwin, ... }: {
+	home-managerModule = false;
+
+  homeConfig = { config, lib, pkgs, isDarwin, home-manager, ... }: {
       home-manager.users.${username} = {
         home = {
 		inherit username;
@@ -25,6 +27,7 @@
           stateVersion = "24.05";
         };
         programs.home-manager.enable = true;
+	programs.zsh.enable = true;
       };
     };
 }

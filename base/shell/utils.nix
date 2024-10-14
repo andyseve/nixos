@@ -1,6 +1,7 @@
 {
   config,
   hostConfig,
+  isDarwin,
   lib,
   options,
   pkgs,
@@ -24,9 +25,11 @@ in
         ++ [
           btop
           pciutils
-          usbutils
-          iputils
-        ] # monitoring tools
+        ] 
+	++ (if !isDarwin then [
+		usbutils
+          	iputils
+	] else []) # monitoring tools
         ++ [
           bat
           tree

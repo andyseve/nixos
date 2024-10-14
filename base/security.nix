@@ -2,7 +2,7 @@
 {
   config,
   hostConfig,
-  isNixos,
+  isDarwin,
   lib,
   options,
   ...
@@ -12,15 +12,14 @@ let
 in
 {
   config = mkMerge [
-    {
+
+    (if !isDarwin then {
+      ## System security
+      # copied from https://github.com/hlissner/dotfiles/blob/master/modules/security.nix
+
       # turn on sudo capabilities
       # eventually I should remove this - everything is handled by nix config files
       security.sudo.enable = mkDefault true;
-    }
-
-    (mkIf isNixos {
-      ## System security
-      # copied from https://github.com/hlissner/dotfiles/blob/master/modules/security.nix
 
       # Prevent replacing the running kernel w/o reboot
       security.protectKernelImage = mkDefault true;
@@ -30,7 +29,7 @@ in
       boot.tmp.useTmpfs = mkDefault true;
       # If not using tmpfs, which is naturally purged on reboot, we must clean it
       # /tmp ourselves. /tmp should be volatile storage!
-      boot.tmp.cleanOnBoot = lib.mkDefault (!config.boot.tmp.useTmpfs);
+      # boot.tmp.cleanOnBoot = lib.mkDefault ((!config.boot.tmp.useTmpfs) or false);
 
       # Fix a security hole in place for backwards compatibility. See desc in
       # nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
@@ -76,6 +75,7 @@ in
         "net.ipv4.tcp_congestion_control" = "bbr";
         "net.core.default_qdisc" = "cake";
       };
-    })
+    } else {})
+
   ];
 }
