@@ -29,9 +29,9 @@ in
       mapAttrsToList (name: value: { inherit name value; }) attrs
     ));
 
-  extractAttrs = name: attrs: mapAttrs (n: v: v.${name}) attrs;
+  extractAttrs = name: attrs: mapAttrs (_n: v: v.${name}) attrs;
 
-  applyAttrsOnArgs = args: attrs: mapAttrs (n: v: v args) attrs;
+  applyAttrsOnArgs = args: attrs: mapAttrs (_n: v: v args) attrs;
 
   isWSL = pathExists "/proc/sys/fs/binfmt_misc/WSLInterop";
 }

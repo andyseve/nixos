@@ -13,10 +13,8 @@
           userConfig.userConfig
         else
           {
-            config,
             isDarwin,
             isNixos,
-            lib,
             pkgs,
             ...
           }:

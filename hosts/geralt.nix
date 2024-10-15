@@ -1,5 +1,5 @@
 # Host information file for geralt
-{ lib, ... }:
+{ ... }:
 rec {
   system = "x86_64-linux";
   wsl = true;
@@ -27,25 +27,14 @@ rec {
   users = [ "stranger" ];
 
   nixosConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
+    { ... }:
     {
       # Basic hardware configuration like disks, timezones, networking etc.
       # Only used when natively running on nixos
     };
 
   wslConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      nixos-wsl,
-      ...
-    }:
+    { lib, ... }:
     {
       # Config options for wsl
       # only imported when running in windows subsystem for linux
@@ -55,13 +44,7 @@ rec {
     };
 
   darwinConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      darwin,
-      ...
-    }:
+    { ... }:
     {
       # Config options for darwin (MacOS)
       # only imported when running on MacOS using nix-darwin

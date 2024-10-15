@@ -1,9 +1,6 @@
 # Function definition to define hosts
 # Reads settings from ../hosts/${hostname}.nix file to generate nixosSystem object
 { lib, ... }:
-let
-  mkUser = import ./user.nix { inherit lib; };
-in
 rec {
   # mkHost reads from hosts/${hostname}.nix file and creates a nixos config
   # input variables define the compilation environment, the files are loaded accordingly.
@@ -18,14 +15,14 @@ rec {
         else
           (import ../hosts/${hostname}.nix { inherit lib; });
       wslDefault =
-        { config, ... }:
+        { ... }:
         {
           wsl.enable = true;
           wsl.nativeSystemd = true;
         };
       homeDefault =
-        inputs:
-        { config, ... }:
+        _inputs:
+        { ... }:
         {
           home-manager = {
             useGlobalPkgs = true;

@@ -3,9 +3,7 @@
   hostConfig,
   isDarwin,
   lib,
-  options,
   pkgs,
-  upkgs,
   ...
 }:
 let

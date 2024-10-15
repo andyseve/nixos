@@ -1,5 +1,5 @@
 # Host information file for vesemir
-{ lib, ... }:
+{ ... }:
 rec {
   system = "x86_64-linux";
   nixos = true;
@@ -23,12 +23,7 @@ rec {
   users = [ "stranger" ];
 
   nixosConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
+    { lib, ... }:
     {
       # Basic hardware configuration like disks, timezones, networking etc.
       # Only used when natively running on nixos

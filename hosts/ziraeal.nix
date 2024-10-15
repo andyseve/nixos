@@ -1,5 +1,5 @@
 # Host information file for ziraeal
-{ lib, ... }:
+{ ... }:
 rec {
   system = "aarch64-darwin";
   darwin = true;
@@ -31,13 +31,7 @@ rec {
   users = [ "stranger" ];
 
   darwinConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      darwin,
-      ...
-    }:
+    { pkgs, ... }:
     {
       # Config options for darwin (MacOS)
       # only imported when running on MacOS using nix-darwin

@@ -1,14 +1,12 @@
 # security settings
 {
   config,
-  hostConfig,
   isDarwin,
   lib,
-  options,
   ...
 }:
 let
-  inherit (lib) mkDefault mkIf mkMerge;
+  inherit (lib) mkDefault mkMerge;
 in
 {
   config = mkMerge [

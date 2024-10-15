@@ -1,14 +1,10 @@
 {
-  config,
   isDarwin,
   lib,
   options,
   pkgs,
   ...
 }:
-let
-  inherit (lib) mkDefault;
-in
 {
   # Basic Nix configuration
   nix = {

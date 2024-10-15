@@ -42,15 +42,17 @@
       "aarch64-darwin"
     ];
     nixosConfigurations = inputs.nixpkgs.lib.foldlAttrs (utils.mkHostNixos inputs) { } (
-      inputs.nixpkgs.lib.mapAttrs (name: value: utils.mkHost name) hostnames
+      inputs.nixpkgs.lib.mapAttrs (name: _value: utils.mkHost name) hostnames
     );
     darwinConfigurations = inputs.nixpkgs.lib.foldlAttrs (utils.mkHostDarwin inputs) { } (
-      inputs.nixpkgs.lib.mapAttrs (name: value: utils.mkHost name) hostnames
+      inputs.nixpkgs.lib.mapAttrs (name: _value: utils.mkHost name) hostnames
     );
     formatter = builtins.listToAttrs (
       builtins.map (system: {
         name = system;
-        value = (inputs.treefmt-nix.lib.evalModule (inputs.nixpkgs.legacyPackages.${system}) ./treefmt.nix).config.build.wrapper;
+        value =
+          (inputs.treefmt-nix.lib.evalModule (inputs.nixpkgs.legacyPackages.${system}) ./treefmt.nix)
+          .config.build.wrapper;
         # value = inputs.nixpkgs.legacyPackages.${system}.treefmt;
       }) systems
     );

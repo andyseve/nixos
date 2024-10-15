@@ -1,5 +1,5 @@
 # user settings
-{ lib, hostConfig, ... }:
+{ hostConfig, ... }:
 rec {
   home = if hostConfig ? home then hostConfig.home else "/home";
   username = "stranger";
@@ -7,8 +7,6 @@ rec {
   shell = "zsh";
   userConfig =
     {
-      config,
-      lib,
       pkgs,
       isDarwin,
       isNixos,
@@ -36,14 +34,7 @@ rec {
   home-managerModule = false;
 
   homeConfig =
-    {
-      config,
-      lib,
-      pkgs,
-      isDarwin,
-      home-manager,
-      ...
-    }:
+    { isDarwin, home-manager, ... }:
     {
       home-manager.users.${username} = {
         home = {
