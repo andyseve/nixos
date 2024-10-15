@@ -41,16 +41,19 @@ rec {
     {
       # Config options for darwin (MacOS)
       # only imported when running on MacOS using nix-darwin
-			networking.computerName = "ziraeal";
-			networking.hostName = "ziraeal";
-			environment.shells = [ pkgs.bashInteractive pkgs.zsh ];
-			system.defaults = {
-				finder.AppleShowAllExtensions = true;
-				NSGlobalDomain = {
-					AppleShowAllExtensions = false;
-					InitialKeyRepeat = 10;
-					KeyRepeat = 1;
-				};
-			};
+      networking.computerName = "ziraeal";
+      networking.hostName = "ziraeal";
+      environment.shells = [
+        pkgs.bashInteractive
+        pkgs.zsh
+      ];
+      system.defaults = {
+        finder.AppleShowAllExtensions = true;
+        NSGlobalDomain = {
+          AppleShowAllExtensions = false;
+          InitialKeyRepeat = 10;
+          KeyRepeat = 1;
+        };
+      };
     };
 }

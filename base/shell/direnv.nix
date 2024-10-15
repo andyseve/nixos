@@ -8,8 +8,8 @@
 }:
 
 let
-	inherit (lib) mkIf;
-  cfg = hostConfig.shell.direnv or {};
+  inherit (lib) mkIf;
+  cfg = hostConfig.shell.direnv or { };
 in
 {
   config = mkIf (cfg.enable or false) {

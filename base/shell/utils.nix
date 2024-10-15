@@ -10,7 +10,7 @@
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = hostConfig.shell or {};
+  cfg = hostConfig.shell or { };
 in
 {
   config = mkMerge [
@@ -25,11 +25,16 @@ in
         ++ [
           btop
           pciutils
-        ] 
-	++ (if !isDarwin then [
-		usbutils
-          	iputils
-	] else []) # monitoring tools
+        ]
+        ++ (
+          if !isDarwin then
+            [
+              usbutils
+              iputils
+            ]
+          else
+            [ ]
+        ) # monitoring tools
         ++ [
           bat
           tree
@@ -46,9 +51,7 @@ in
           autojump
           silver-searcher
         ] # search tools
-        ++ [
-		python3Packages.argcomplete
-	] # completion
+        ++ [ python3Packages.argcomplete ] # completion
         ++ [
           tmux
           screen

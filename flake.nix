@@ -26,6 +26,10 @@
     # HYPRLAND desktop manager for wayland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
+
+    # treefmt to format files
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: rec {
@@ -33,12 +37,22 @@
     utils = import ./utils { lib = inputs.nixpkgs.lib; };
     hostnames = utils.fileNames (toString ./hosts);
     usernames = utils.fileNames (toString ./users);
-    modules = utils.listModules' (toString ./base);
+    systems = [
+      "x86_64-linux"
+      "aarch64-darwin"
+    ];
     nixosConfigurations = inputs.nixpkgs.lib.foldlAttrs (utils.mkHostNixos inputs) { } (
       inputs.nixpkgs.lib.mapAttrs (name: value: utils.mkHost name) hostnames
     );
     darwinConfigurations = inputs.nixpkgs.lib.foldlAttrs (utils.mkHostDarwin inputs) { } (
       inputs.nixpkgs.lib.mapAttrs (name: value: utils.mkHost name) hostnames
+    );
+    formatter = builtins.listToAttrs (
+      builtins.map (system: {
+        name = system;
+        value = (inputs.treefmt-nix.lib.evalModule (inputs.nixpkgs.legacyPackages.${system}) ./treefmt.nix).config.build.wrapper;
+        # value = inputs.nixpkgs.legacyPackages.${system}.treefmt;
+      }) systems
     );
   };
 }

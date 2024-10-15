@@ -1,13 +1,15 @@
 {
   config,
-	isDarwin,
+  isDarwin,
   lib,
   options,
   pkgs,
   ...
-}: let
-	inherit (lib) mkDefault;
-in {
+}:
+let
+  inherit (lib) mkDefault;
+in
+{
   # Basic Nix configuration
   nix = {
     # flakes
@@ -43,32 +45,44 @@ in {
     };
 
     # Garbage Collector
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 30d";
-    } 
-    // (if isDarwin then {
-    	interval = { Weekday = 0; Hour = 2; Minute = 0; };
-    } else {
-    	dates = "weekly";
-    });
+    gc =
+      {
+        automatic = true;
+        options = "--delete-older-than 30d";
+      }
+      // (
+        if isDarwin then
+          {
+            interval = {
+              Weekday = 0;
+              Hour = 2;
+              Minute = 0;
+            };
+          }
+        else
+          { dates = "weekly"; }
+      );
   };
 
+  environment.systemPackages = [
+    pkgs.coreutils
+    pkgs.curl
+    pkgs.git
+    pkgs.ripgrep
+    pkgs.wget
+    pkgs.neovim
+  ];
 
-	environment.systemPackages = [
-		pkgs.coreutils
-		pkgs.curl
-		pkgs.git
-		pkgs.ripgrep
-		pkgs.wget
-		pkgs.neovim
-	];
-
-	# enable nix daemon on apple
+  # enable nix daemon on apple
   # system settings
   system.stateVersion = (if isDarwin then 5 else "24.05");
 }
-// (if isDarwin then {
-	# darwin specific options
-	services.nix-daemon.enable = true;
-	} else {})
+// (
+  if isDarwin then
+    {
+      # darwin specific options
+      services.nix-daemon.enable = true;
+    }
+  else
+    { }
+)

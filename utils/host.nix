@@ -2,8 +2,9 @@
 # Reads settings from ../hosts/${hostname}.nix file to generate nixosSystem object
 { lib, ... }:
 let
-mkUser = import ./user.nix { inherit lib; };
-in rec {
+  mkUser = import ./user.nix { inherit lib; };
+in
+rec {
   # mkHost reads from hosts/${hostname}.nix file and creates a nixos config
   # input variables define the compilation environment, the files are loaded accordingly.
   mkHost =
@@ -90,13 +91,14 @@ in rec {
             isDarwin = true;
             isNixos = false;
           };
-          modules = [
-            inputs.home-manager.darwinModules.home-manager
-            (homeDefault inputs)
-            hostConfig.darwinConfig
-          ]
-	  ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-	  ++ (listModules' (toString ../base));
+          modules =
+            [
+              inputs.home-manager.darwinModules.home-manager
+              (homeDefault inputs)
+              hostConfig.darwinConfig
+            ]
+            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+            ++ (listModules' (toString ../base));
         };
 
       nixosConfig =
@@ -120,13 +122,14 @@ in rec {
             isDarwin = false;
             isNixos = true;
           };
-          modules = [
-        	inputs.home-manager.nixosModules.home-manager
-            (homeDefault inputs)
-            hostConfig.nixosConfig
-          ]
-	  ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-	  ++ (listModules' (toString ../base));
+          modules =
+            [
+              inputs.home-manager.nixosModules.home-manager
+              (homeDefault inputs)
+              hostConfig.nixosConfig
+            ]
+            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+            ++ (listModules' (toString ../base));
         };
     in
     { }
