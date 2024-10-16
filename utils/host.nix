@@ -64,7 +64,7 @@ rec {
               hostConfig.wslConfig
             ]
             ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-            ++ (listModules' (toString ../base));
+            ++ (listModules' (toString ../modules));
         };
 
       darwinConfig =
@@ -95,7 +95,7 @@ rec {
               hostConfig.darwinConfig
             ]
             ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-            ++ (listModules' (toString ../base));
+            ++ (listModules' (toString ../modules));
         };
 
       nixosConfig =
@@ -126,7 +126,7 @@ rec {
               hostConfig.nixosConfig
             ]
             ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-            ++ (listModules' (toString ../base));
+            ++ (listModules' (toString ../modules));
         };
     in
     { }
