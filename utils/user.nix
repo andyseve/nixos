@@ -6,37 +6,36 @@
     hostConfig: username:
     let
       userConfig = import ../users/${username}.nix { inherit lib hostConfig; };
+      mkDefaultUserConfig =
+        userConfig:
+        {
+          isDarwin,
+          isNixos,
+          pkgs,
+          ...
+        }:
+        {
+          users.users.${userConfig.username} =
+            {
+              description = userConfig.name;
+              shell = pkgs.${userConfig.shell};
+              home =
+                if isDarwin then "/Users/${userConfig.username}" else "${userConfig.home}/${userConfig.username}";
+              packages = [ pkgs.home-manager ];
+            }
+            // (
+              if isNixos then
+                {
+                  isNormalUser = true;
+                  extraGroups = [ "wheel" ];
+                }
+              else
+                { }
+            );
+        };
     in
     [
-      (
-        if userConfig ? userConfig then
-          userConfig.userConfig
-        else
-          {
-            isDarwin,
-            isNixos,
-            pkgs,
-            ...
-          }:
-          {
-            users.users.${username} =
-              {
-                description = userConfig.name;
-                shell = pkgs.${userConfig.shell};
-                home = if isDarwin then "/Users/${username}" else "${userConfig.home}/${username}";
-                packages = [ pkgs.home-manager ];
-              }
-              // (
-                if isNixos then
-                  {
-                    isNormalUser = true;
-                    extraGroups = [ "wheel" ];
-                  }
-                else
-                  { }
-              );
-          }
-      )
+      (if userConfig ? userConfig then userConfig.userConfig else mkDefaultUserConfig userConfig)
       (
         if
           (userConfig ? homeConfig && userConfig ? home-manager-module && userConfig.home-manager-module)

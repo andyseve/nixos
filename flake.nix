@@ -35,6 +35,7 @@
   outputs = inputs: rec {
     # output local functions defined in utils
     utils = import ./utils { lib = inputs.nixpkgs.lib; };
+    hostConfigs = inputs.nixpkgs.lib.mapAttrs (name: _value: import ./hosts/${name}.nix { }) hostnames;
     hostnames = utils.fileNames (toString ./hosts);
     usernames = utils.fileNames (toString ./users);
     systems = [
@@ -42,10 +43,10 @@
       "aarch64-darwin"
     ];
     nixosConfigurations = inputs.nixpkgs.lib.foldlAttrs (utils.mkHostNixos inputs) { } (
-      inputs.nixpkgs.lib.mapAttrs (name: _value: utils.mkHost name) hostnames
+      inputs.nixpkgs.lib.mapAttrs (name: _value: utils.mkHost name) hostConfigs
     );
     darwinConfigurations = inputs.nixpkgs.lib.foldlAttrs (utils.mkHostDarwin inputs) { } (
-      inputs.nixpkgs.lib.mapAttrs (name: _value: utils.mkHost name) hostnames
+      inputs.nixpkgs.lib.mapAttrs (name: _value: utils.mkHost name) hostConfigs
     );
     formatter = builtins.listToAttrs (
       builtins.map (system: {

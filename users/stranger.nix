@@ -18,6 +18,7 @@ rec {
           description = name;
           shell = "${pkgs.${shell}}/bin/${shell}";
           home = if isDarwin then "/Users/${username}" else "${home}/${username}";
+          packages = [ pkgs.home-manager ];
         }
         // (
           if isNixos then

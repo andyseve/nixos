@@ -6,9 +6,7 @@ let
     filterAttrs
     hasSuffix
     mapAttrs
-    mapAttrs'
     mapAttrsToList
-    nameValuePair
     removeSuffix
     ;
 in
@@ -19,9 +17,9 @@ in
     dir:
     let
       files = filterAttrs (name: value: value == "regular" && hasSuffix ".nix" name) (readDir dir);
-      getNames = name: value: nameValuePair (removeSuffix ".nix" name) value;
+      getNames = name: _value: (removeSuffix ".nix" name);
     in
-    mapAttrs' getNames files;
+    mapAttrsToList getNames files;
 
   countAttrs =
     pred: attrs:
