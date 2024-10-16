@@ -35,9 +35,14 @@
   outputs = inputs: rec {
     # output local functions defined in utils
     utils = import ./utils { lib = inputs.nixpkgs.lib; };
-    hostConfigs = inputs.nixpkgs.lib.mapAttrs (name: _value: import ./hosts/${name}.nix { }) hostnames;
     hostnames = utils.fileNames (toString ./hosts);
     usernames = utils.fileNames (toString ./users);
+    hostConfigs = builtins.listToAttrs (
+      builtins.map (name: {
+        name = name;
+        value = import ./hosts/${name}.nix { };
+      }) hostnames
+    );
     systems = [
       "x86_64-linux"
       "aarch64-darwin"
