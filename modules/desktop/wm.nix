@@ -1,41 +1,25 @@
 {
-  inputs,
   config,
-  options,
+  hostConfig,
+  hyprland,
+  isNixos,
   lib,
   pkgs,
   ...
 }:
 
-with lib;
 let
-  modules = config.anish-sevekari-modules;
-  cfg = modules.desktop.wm;
+  inherit (lib) mkDefault mkIf mkMerge;
+  cfg = hostConfig.desktop.wm or {};
 in
 {
-  options.anish-sevekari-modules.desktop.wm = {
+  config = mkIf isNixos (mkMerge [
 
-    xmonad.enable = mkOption {
-      description = "enable xmonad";
-      type = types.bool;
-      default = false;
-      example = true;
-    };
-
-    hyprland.enable = mkOption {
-      description = "enable hyprland";
-      type = types.bool;
-      default = false;
-      example = true;
-    };
-
-  };
-
-  config = mkMerge [
-
-    (mkIf cfg.xmonad.enable {
-      anish-sevekari-modules.desktop.enable = true;
-      anish-sevekari-modules.desktop.xserver.enable = true;
+    (mkIf (cfg.xmonad.enable or false) {
+      assertions = [
+      { assertion = hostConfig.desktop.enable; }
+	{ assertion = hostConfig.desktop.xserver.enable; }
+	];
 
       services = mkDefault {
         xserver = {
@@ -52,26 +36,28 @@ in
 
       };
 
-      environment.systemPackages = with pkgs; [
-        xmobar # need a bar for xmonad
-        feh # pictures
-        dunst
-        libnotify # notifications
-        rofi
-        xdotool # xserver scripting
-        xorg.xmodmap
-        xorg.xrandr
-        xorg.libXinerama # xserver scripting
+      environment.systemPackages = [
+        pkgs.xmobar # need a bar for xmonad
+        pkgs.feh # pictures
+        pkgs.dunst
+        pkgs.libnotify # notifications
+        pkgs.rofi
+        pkgs.xdotool # xserver scripting
+        pkgs.xorg.xmodmap
+        pkgs.xorg.xrandr
+        pkgs.xorg.libXinerama # xserver scripting
       ];
     })
 
-    (mkIf cfg.hyprland.enable {
-      anish-sevekari-modules.desktop.enable = true;
-      anish-sevekari-modules.desktop.wayland.enable = true;
+    (mkIf (cfg.hyprland.enable or false) {
+      assertions = [
+      { assertion = hostConfig.desktop.enable; }
+	{ assertion = hostConfig.desktop.wayland.enable; }
+	];
 
       programs.hyprland = {
         enable = true;
-        package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+        package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
         xwayland.enable = true;
       };
       environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -84,5 +70,5 @@ in
       ];
     })
 
-  ];
+  ]);
 }

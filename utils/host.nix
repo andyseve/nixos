@@ -49,6 +49,7 @@ rec {
               config.allowUnfree = hostConfig.unfree;
             };
             home-manager = inputs.home-manager;
+	    hyprland = inputs.hyprland;
             nixos-wsl = inputs.nixos-wsl;
             darwin = inputs.darwin;
             isWSL = true;
@@ -82,6 +83,7 @@ rec {
               config.allowUnfree = hostConfig.unfree;
             };
             home-manager = inputs.home-manager;
+	    hyprland = inputs.hyprland;
             nixos-wsl = inputs.nixos-wsl;
             darwin = inputs.darwin;
             isWSL = false;
@@ -113,6 +115,7 @@ rec {
               config.allowUnfree = hostConfig.unfree;
             };
             home-manager = inputs.home-manager;
+	    hyprland = inputs.hyprland;
             nixos-wsl = inputs.nixos-wsl;
             darwin = inputs.darwin;
             isWSL = false;

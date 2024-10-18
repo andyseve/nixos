@@ -1,7 +1,7 @@
 {
   config,
   hostConfig,
-  isWsl,
+  isNixos,
   lib,
   options,
   pkgs,
@@ -11,12 +11,12 @@
 
 let
   inherit (lib) mkMerge mkIf;
-  cfg = hostConfig.desktop;
+  cfg = hostConfig.desktop or {};
 in
 {
-  config = mkMerge [
+  config = mkIf isNixos (mkMerge [
 
-    (mkIf (cfg.enable && !isWsl) {
+    (mkIf (cfg.enable or false) {
       # modules.desktop.wm.${cfg.wm.default}.enable = true;
       # modules.desktop.dm.${cfg.dm.default}.enable = true;
 
@@ -52,7 +52,7 @@ in
         ];
     })
 
-    # ( mkIf (cfg.enable && cfg.xserver.enable && !isWsl) {
+    # ( mkIf (cfg.enable or false) {
     #   assertions = [
     #     {
     #       # ensure that there is exactly only display manager
@@ -65,5 +65,5 @@ in
     #     }
     #   ];
     # })
-  ];
+  ]);
 }

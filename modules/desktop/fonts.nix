@@ -1,36 +1,17 @@
 {
-  hostConfig,
   config,
-  options,
+  hostConfig,
   lib,
   pkgs,
   ...
 }:
-with lib;
 let
+	inherit (lib) mkIf mkMerge;
   modules = config.anish-sevekari-modules;
-  cfg = modules.desktop.fonts;
+  cfg = hostConfig.desktop.fonts or {};
 in
 {
-  options.anish-sevekari-modules.desktop.fonts = {
-
-    enable = mkOption {
-      description = "enable fonts";
-      type = types.bool;
-      default = modules.desktop.enable;
-      example = true;
-    };
-
-    marathi = mkOption {
-      description = "enable fonts";
-      type = types.bool;
-      default = cfg.enable;
-      example = true;
-    };
-
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable or true) {
     fonts = {
       packages =
         with pkgs;
@@ -44,7 +25,7 @@ in
               ];
             })
           ]
-          (mkIf cfg.marathi [ lohit-fonts.marathi ])
+          (mkIf (cfg.marathi or true) [ lohit-fonts.marathi ])
         ];
     };
   };

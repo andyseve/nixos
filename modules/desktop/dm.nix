@@ -1,37 +1,27 @@
 {
   config,
-  options,
+  hostConfig,
+  isNixos,
   lib,
-  pkgs,
   ...
 }:
 
-with lib;
 let
-  modules = config.anish-sevekari-modules;
-  cfg = modules.desktop.dm;
+  inherit (lib) mkIf mkMerge;
+  cfg = hostConfig.desktop.dm or {};
 in
 {
-  options.anish-sevekari-modules.desktop.dm = {
+  config = mkIf isNixos (mkMerge [
 
-    lightdm.enable = mkOption {
-      description = "Enable lightdm";
-      type = types.bool;
-      default = false;
-      example = true;
-    };
-
-  };
-
-  config = mkMerge [
-
-    (mkIf cfg.lightdm.enable {
-      anish-sevekari-modules.desktop.enable = true;
-      anish-sevekari-modules.desktop.xserver.enable = true;
+    (mkIf (cfg.lightdm.enable or false) {
+    	assertions = [
+	{ assertion = hostConfig.desktop.enable; }
+      { assertion = hostConfig.desktop.xserver.enable; }
+      ];
       services.xserver.displayManager = {
         lightdm.enable = true;
       };
     })
 
-  ];
+  ]);
 }
