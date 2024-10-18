@@ -6,9 +6,8 @@
   ...
 }:
 let
-	inherit (lib) mkIf mkMerge;
-  modules = config.anish-sevekari-modules;
-  cfg = hostConfig.desktop.fonts or {};
+  inherit (lib) mkIf mkMerge;
+  cfg = hostConfig.desktop.fonts or { };
 in
 {
   config = mkIf (cfg.enable or true) {

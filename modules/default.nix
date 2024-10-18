@@ -1,6 +1,5 @@
 {
   isDarwin,
-  lib,
   options,
   pkgs,
   ...

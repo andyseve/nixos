@@ -14,80 +14,80 @@ in
   config = mkMerge [
     (mkIf (cfg.utils.enable or false) {
       environment.systemPackages =
-        with pkgs;
-        [ git ] # Version Control
+        [ pkgs.git ] # Version Control
         ++ [
-          zip
-          unzip
+          pkgs.zip
+          pkgs.unzip
         ] # archieves
         ++ [
-          btop
-          pciutils
+          pkgs.btop
+          pkgs.pciutils
         ]
         ++ (
           if !isDarwin then
             [
-              usbutils
-              iputils
+              pkgs.usbutils
+              pkgs.iputils
             ]
           else
             [ ]
         ) # monitoring tools
         ++ [
-          bat
-          tree
-          ranger
+          pkgs.bat
+          pkgs.tree
+          pkgs.ranger
+          pkgs.eza
         ] # file tools
         ++ [
-          wget
-          curl
-          rsync
+          pkgs.wget
+          pkgs.curl
+          pkgs.rsync
         ]
         ++ [
-          fzf
-          ripgrep
-          autojump
-          silver-searcher
+          pkgs.fzf
+          pkgs.ripgrep
+          pkgs.autojump
+          pkgs.silver-searcher
         ] # search tools
-        ++ [ python3Packages.argcomplete ] # completion
         ++ [
-          tmux
-          screen
+          pkgs.tmux
+          pkgs.screen
         ]
-        ++ [ neovim ];
+        ++ [ pkgs.neovim ];
 
     })
 
     (mkIf (cfg.code.cpp.enable or false) {
-      environment.systemPackages = with pkgs; [
-        gnumake
-        gcc
-        llvm
-        clang
+      environment.systemPackages = [
+        pkgs.gnumake
+        pkgs.gcc
+        pkgs.llvm
       ];
     })
 
     (mkIf (cfg.code.python.enable or false) {
-      environment.systemPackages = with pkgs; [
-        python3
-        python3Packages.numpy
-        python3Packages.matplotlib
+      environment.systemPackages = [
+        pkgs.python3
+        pkgs.python3Packages.numpy
+        pkgs.python3Packages.scipy
+        pkgs.python3Packages.torch
+        pkgs.python3Packages.matplotlib
       ];
     })
 
     (mkIf (cfg.code.haskell.enable or false) {
-      environment.systemPackages = with pkgs; [
-        haskellPackages.ghc
-        haskellPackages.hoogle
+      environment.systemPackages = [
+        pkgs.haskellPackages.ghc
+        pkgs.haskellPackages.hoogle
       ];
     })
 
     (mkIf (cfg.latex.enable or false) {
-      environment.systemPackages = with pkgs; [
-        texliveFull
-        texlivePackages.biber
-        texlivePackages.git-latexdiff
-        texlivePackages.latexdiff
+      environment.systemPackages = [
+        pkgs.texliveFull
+        pkgs.texlivePackages.biber
+        pkgs.texlivePackages.git-latexdiff
+        pkgs.texlivePackages.latexdiff
       ];
     })
 

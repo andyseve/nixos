@@ -10,16 +10,16 @@
 
 let
   inherit (lib) mkDefault mkIf mkMerge;
-  cfg = hostConfig.desktop.wm or {};
+  cfg = hostConfig.desktop.wm or { };
 in
 {
   config = mkIf isNixos (mkMerge [
 
     (mkIf (cfg.xmonad.enable or false) {
       assertions = [
-      { assertion = hostConfig.desktop.enable; }
-	{ assertion = hostConfig.desktop.xserver.enable; }
-	];
+        { assertion = hostConfig.desktop.enable; }
+        { assertion = hostConfig.desktop.xserver.enable; }
+      ];
 
       services = mkDefault {
         xserver = {
@@ -51,9 +51,9 @@ in
 
     (mkIf (cfg.hyprland.enable or false) {
       assertions = [
-      { assertion = hostConfig.desktop.enable; }
-	{ assertion = hostConfig.desktop.wayland.enable; }
-	];
+        { assertion = hostConfig.desktop.enable; }
+        { assertion = hostConfig.desktop.wayland.enable; }
+      ];
 
       programs.hyprland = {
         enable = true;

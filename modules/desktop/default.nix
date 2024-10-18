@@ -3,7 +3,6 @@
   hostConfig,
   isNixos,
   lib,
-  options,
   pkgs,
   upkgs,
   ...
@@ -11,7 +10,7 @@
 
 let
   inherit (lib) mkMerge mkIf;
-  cfg = hostConfig.desktop or {};
+  cfg = hostConfig.desktop or { };
 in
 {
   config = mkIf isNixos (mkMerge [

@@ -2,15 +2,10 @@
   config,
   options,
   lib,
-  pkgs,
   ...
 }:
 
 with lib;
-let
-  modules = config.anish-sevekari-modules;
-  cfg = modules.desktop.wayland;
-in
 {
   options.anish-sevekari-modules.desktop.wayland = {
 
