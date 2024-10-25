@@ -53,6 +53,18 @@
         "type": "github"
       }
     },
+    "determinate-nixd-aarch64-darwin": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-OhG8joS/uN3Kdw4h9w8F/6ZIVTFZ8J9Fb4NGn/KK5/s=",
+        "type": "file",
+        "url": "https://install.determinate.systems/determinate-nixd/rev/51ecec5a3148baef87c2015536aa12dd18e4c4ad/macOS"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://install.determinate.systems/determinate-nixd/rev/51ecec5a3148baef87c2015536aa12dd18e4c4ad/macOS"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -391,6 +403,7 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
+        "determinate-nixd-aarch64-darwin": "determinate-nixd-aarch64-darwin",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nixos-wsl": "nixos-wsl",

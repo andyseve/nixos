@@ -8,8 +8,7 @@
   # Basic Nix configuration
   nix = {
     # flakes
-    package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
+    package = pkgs.nix;
     # build related settings
     settings = {
       auto-optimise-store = true;
@@ -68,16 +67,10 @@
     pkgs.neovim
   ];
 
+  # enable zsh
+  programs.zsh.enable = true;
+
   # enable nix daemon on apple
   # system settings
   system.stateVersion = (if isDarwin then 5 else "24.05");
 }
-// (
-  if isDarwin then
-    {
-      # darwin specific options
-      services.nix-daemon.enable = true;
-    }
-  else
-    { }
-)

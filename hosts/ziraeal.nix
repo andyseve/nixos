@@ -3,6 +3,7 @@
 rec {
   system = "aarch64-darwin";
   darwin = true;
+  unfree = true;
   hardware = {
     audio.enable = true;
   };

@@ -15,6 +15,13 @@
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Clean nix install on MacOS
+    # They insist that we use their version of nix, which I don't like.
+    determinate-nixd-aarch64-darwin = {
+      url = "https://install.determinate.systems/determinate-nixd/rev/51ecec5a3148baef87c2015536aa12dd18e4c4ad/macOS";
+      flake = false;
+    };
+
     # Modules for wsl
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
