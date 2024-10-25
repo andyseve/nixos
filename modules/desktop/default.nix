@@ -28,17 +28,18 @@ in
             pkgs.kitty
           ]
           ++ [
-            (pkgs.vscode-with-extensions.override {
+	    pkgs.vscode
+            (mkIf false (pkgs.vscode-with-extensions.override {
               vscodeExtensions = with pkgs.vscode-extensions; [
                 jnoortheen.nix-ide
                 # ms-python.python
                 # ms-pyright.pyright
                 # ms-python.flake8
-                ms-vscode.cpptools
+                # ms-vscode.cpptools
                 # ms-vscode-remote.remote-ssh
                 github.copilot
               ];
-            })
+            }))
           ];
       })
 
