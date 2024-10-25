@@ -1,13 +1,16 @@
-{ config, lib, option, ... }:
+{ isDarwin, lib, ... }:
 let
-	inherit (lib) mkDefault mkIf mkMerge mkOption;
+  inherit (lib) mkOption;
+in
 {
-	options = mkMerge [
-		(mkIf isDarwin {
-			environment.sessionVariables = mkOption {
-				type = lib.type.str;
-				description = "filler option to stop errors";
-			};
-		})
-	];
+  options =
+    if isDarwin then
+      {
+        environment.sessionVariables = mkOption {
+          type = lib.type.str;
+          description = "filler option to stop errors";
+        };
+      }
+    else
+      { };
 }
