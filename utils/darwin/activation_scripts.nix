@@ -32,5 +32,6 @@ in {
 
 	  system.activationScripts.extraActivation.text = lib.mkAfter ''
 	  	softwareupdate --install-rosetta --agree-to-license
+		xcode-select --install
 	  '';
 }

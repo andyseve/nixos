@@ -12,9 +12,10 @@ in {
 	config = if isDarwin then {
 		nix-homebrew = {
 			enable = true;
-			enableRosetta = (hasPrefix "aarch64" pkgs.stdenv.system);
-			mutableTaps = false;
-			autoMigrate = false;
+			# enableRosetta = (hasPrefix "aarch64" pkgs.stdenv.system);
+			user = "stranger";
+			# mutableTaps = false;
+			# autoMigrate = false;
 		};
 		homebrew = {
 			enable = true;
@@ -35,7 +36,7 @@ in {
 				# "Microsoft Word" = 462054704;
 				# "Microsoft PowerPoint" = 462062816;
 				"Slack" = 803453959;
-				# "Xcode" = 497799835;
+				"Xcode" = 497799835;
 			};
 		};
 	} else {};
