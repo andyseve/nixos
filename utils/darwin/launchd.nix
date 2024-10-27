@@ -1,4 +1,4 @@
-{ config, ...}: {
+{ config, lib, ...}: {
           launchd.daemons.determinate-nixd-store.serviceConfig = {
             Label = "systems.determinate.nix-store";
             RunAtLoad = true;

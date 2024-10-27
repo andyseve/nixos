@@ -11,16 +11,20 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Controls system level settings for MacOS
-    darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Clean nix install on MacOS
-    # They insist that we use their version of nix, which I don't like.
+		# fetch and install latest determinate installer
     determinate-nixd-aarch64-darwin = {
       url = "https://install.determinate.systems/determinate-nixd/rev/51ecec5a3148baef87c2015536aa12dd18e4c4ad/macOS";
       flake = false;
     };
+
+    # Controls system level settings for MacOS
+    darwin.url = "github:lnl7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+		# Controls homebrew installation
+		nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
+    nix-homebrew.inputs.nix-darwin.follows = "darwin";
 
     # Modules for wsl
     nixos-wsl.url = "github:nix-community/nixos-wsl";

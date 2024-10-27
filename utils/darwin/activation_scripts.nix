@@ -30,7 +30,7 @@ in {
             mv /usr/local/bin/.determinate-nixd.next /usr/local/bin/determinate-nixd
           '';
 
-	  system.activationScripts.rosetta.text = lib.mkForce ''
+	  system.activationScripts.extraActivation.text = lib.mkAfter ''
 	  	softwareupdate --install-rosetta --agree-to-license
 	  '';
 }

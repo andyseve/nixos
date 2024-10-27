@@ -76,9 +76,7 @@ rec {
               config.allowUnfree = hostConfig.unfree;
             };
             home-manager = inputs.home-manager;
-            hyprland = inputs.hyprland;
             nixos-wsl = inputs.nixos-wsl;
-            darwin = inputs.darwin;
             isWSL = true;
             isDarwin = false;
             isNixos = false;
@@ -110,16 +108,16 @@ rec {
               config.allowUnfree = hostConfig.unfree;
             };
             home-manager = inputs.home-manager;
-            hyprland = inputs.hyprland;
-            nixos-wsl = inputs.nixos-wsl;
             darwin = inputs.darwin;
             determinate = inputs."determinate-nixd-${hostConfig.system}";
+	    nix-homebrew = inputs.nix-homebrew;
             isWSL = false;
             isDarwin = true;
             isNixos = false;
           };
           modules =
             [
+							inputs.nix-homebrew.darwinModules.nix-homebrew
               darwinDefault
               inputs.home-manager.darwinModules.home-manager
               homeDefault
@@ -145,8 +143,6 @@ rec {
             };
             home-manager = inputs.home-manager;
             hyprland = inputs.hyprland;
-            nixos-wsl = inputs.nixos-wsl;
-            darwin = inputs.darwin;
             isWSL = false;
             isDarwin = false;
             isNixos = true;
