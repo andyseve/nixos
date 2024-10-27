@@ -11,7 +11,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-		# fetch and install latest determinate installer
+    # fetch and install latest determinate installer
     determinate-nixd-aarch64-darwin = {
       url = "https://install.determinate.systems/determinate-nixd/rev/51ecec5a3148baef87c2015536aa12dd18e4c4ad/macOS";
       flake = false;
@@ -21,8 +21,8 @@
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-		# Controls homebrew installation
-		nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    # Controls homebrew installation
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.inputs.nix-darwin.follows = "darwin";
 
@@ -68,7 +68,7 @@
       builtins.map (system: {
         name = system;
         value =
-          (inputs.treefmt-nix.lib.evalModule (inputs.nixpkgs.legacyPackages.${system}) ./treefmt.nix)
+          (inputs.treefmt-nix.lib.evalModule (inputs.nixpkgs.legacyPackages.${system}) ./.treefmt.nix)
           .config.build.wrapper;
         # value = inputs.nixpkgs.legacyPackages.${system}.treefmt;
       }) systems

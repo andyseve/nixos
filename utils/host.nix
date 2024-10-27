@@ -33,15 +33,12 @@ rec {
           };
         };
       darwinDefault =
+        { lib, ... }:
         {
-          config,
-          determinate,
-          lib,
-          pkgs,
-          ...
-        }:
-        {
-	  imports = [ ./darwin/activation_scripts.nix ./darwin/launchd.nix ];
+          imports = [
+            ./darwin/activation_scripts.nix
+            ./darwin/launchd.nix
+          ];
           # https://github.com/DeterminateSystems/determinate/blob/main/flake.nix
           # Settings specified in Determinate Systems flake.
           # Have to copy paste because no flakehub.
@@ -110,14 +107,14 @@ rec {
             home-manager = inputs.home-manager;
             darwin = inputs.darwin;
             determinate = inputs."determinate-nixd-${hostConfig.system}";
-	    nix-homebrew = inputs.nix-homebrew;
+            nix-homebrew = inputs.nix-homebrew;
             isWSL = false;
             isDarwin = true;
             isNixos = false;
           };
           modules =
             [
-							inputs.nix-homebrew.darwinModules.nix-homebrew
+              inputs.nix-homebrew.darwinModules.nix-homebrew
               darwinDefault
               inputs.home-manager.darwinModules.home-manager
               homeDefault
