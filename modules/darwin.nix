@@ -30,13 +30,14 @@ in {
 				autoUpdate = false;
 			};
 			masApps = {
-				# "iMovie" = 408981434;
-				# "Keynote" = 409183694;
-				# "Microsoft Excel" = 462058435;
-				# "Microsoft Word" = 462054704;
-				# "Microsoft PowerPoint" = 462062816;
+				"Keynote" = 409183694;
+				"Microsoft Excel" = 462058435;
+				"Microsoft Word" = 462054704;
+				"Microsoft PowerPoint" = 462062816;
+				"Microsoft OneNote" = 784801555;
 				"Slack" = 803453959;
 				"Xcode" = 497799835;
+				# "GlobalProtect" = 1400555706;
 			};
 		};
 	} else {};

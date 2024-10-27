@@ -4,6 +4,7 @@
   isDarwin,
   lib,
   pkgs,
+  upkgs,
   ...
 }:
 
@@ -40,7 +41,10 @@ in
                 github.copilot
               ];
             }))
-          ];
+          ]
+	  ++ [
+		upkgs.zoom-us
+	  ];
       })
 
       # ( mkIf (cfg.enable or false) {
