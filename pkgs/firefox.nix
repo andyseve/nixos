@@ -5,7 +5,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "Firefox";
-  version = "130.0.1";
+  version = "132.0";
 
   meta = {
     description = "The Firefox Web browser";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     name = "Firefox-${version}.dmg";
     url = "http://releases.mozilla.org/pub/firefox/releases/${version}/mac/en-US/Firefox%20${version}.dmg";
-    sha256 = "63ed878485d5498c269d95ba7e64f1104ed085b8e330b0ef0a565f85cc603426";
+    sha256 = "5924171ce774ba8d102ddb45c573ff8acd4e0c289b62597f941ca58d79289704";
   };
 
   buildInputs = [ undmg ];
