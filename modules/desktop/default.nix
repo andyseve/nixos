@@ -24,27 +24,16 @@ in
           [
             (if isDarwin then (pkgs.callPackage ../../pkgs/firefox.nix { }) else pkgs.firefox)
             (if isDarwin then pkgs.vlc-bin else pkgs.vlc)
-            (pkgs.callPackage ../../pkgs/firefox.nix { })
             pkgs.zathura
             pkgs.kitty
           ]
           ++ [
             pkgs.vscode
-            (mkIf false (
-              pkgs.vscode-with-extensions.override {
-                vscodeExtensions = with pkgs.vscode-extensions; [
-                  jnoortheen.nix-ide
-                  # ms-python.python
-                  # ms-pyright.pyright
-                  # ms-python.flake8
-                  # ms-vscode.cpptools
-                  # ms-vscode-remote.remote-ssh
-                  github.copilot
-                ];
-              }
-            ))
           ]
-          ++ [ upkgs.zoom-us ];
+          ++ [
+						upkgs.discord
+						upkgs.zoom-us
+					];
       })
 
       # ( mkIf (cfg.enable or false) {
