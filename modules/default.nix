@@ -9,9 +9,9 @@
   nix = {
     # flakes
     package = pkgs.nix;
+
     # build related settings
     settings = {
-      auto-optimise-store = true;
       require-sigs = true;
       experimental-features = [
         "nix-command"
@@ -37,6 +37,8 @@
       ];
       accept-flake-config = true;
     };
+
+    optimise.automatic = true; # auto-optimize the store
 
     # Garbage Collector
     gc =

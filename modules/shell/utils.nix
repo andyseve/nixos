@@ -68,10 +68,10 @@ in
     (mkIf (cfg.code.python.enable or false) {
       environment.systemPackages = [
         pkgs.python3
-        pkgs.python3Packages.numpy
-        pkgs.python3Packages.scipy
-        pkgs.python3Packages.torch
-        pkgs.python3Packages.matplotlib
+        # pkgs.python3Packages.numpy
+        # pkgs.python3Packages.scipy
+        # pkgs.python3Packages.torch
+        # pkgs.python3Packages.matplotlib
       ];
     })
 
