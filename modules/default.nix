@@ -7,8 +7,8 @@
 {
   # Basic Nix configuration
   nix = {
-    # flakes
-    package = pkgs.nix;
+		# remove channel
+		channel.enable = false;
 
     # build related settings
     settings = {
@@ -74,5 +74,5 @@
 
   # enable nix daemon on apple
   # system settings
-  system.stateVersion = (if isDarwin then 5 else "24.05");
+  system.stateVersion = (if isDarwin then 5 else "24.11");
 }
