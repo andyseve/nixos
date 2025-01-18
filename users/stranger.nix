@@ -1,15 +1,50 @@
 # user settings
-{
-  config,
-  pkgs,
-  ...
-}: {
-  users.users.stranger = {
-    isNormalUser = true;
-    home = "/home/stranger";
-    description = "Anish Sevekari";
-    extraGroups = [ "wheel" "networkmanager" "video" ]; # Enable ‘sudo’ for the user.
-    createHome = true;
-    shell = "${pkgs.zsh}/bin/zsh";
-  };
+{ hostConfig, ... }:
+rec {
+  home = if hostConfig ? home then hostConfig.home else "/home";
+  username = "stranger";
+  name = "Anish Sevekari";
+  shell = "zsh";
+  userConfig =
+    {
+      pkgs,
+      isDarwin,
+      isNixos,
+      ...
+    }:
+    {
+      users.users.${username} =
+        {
+          description = name;
+          shell = "${pkgs.${shell}}/bin/${shell}";
+          home = if isDarwin then "/Users/${username}" else "${home}/${username}";
+          packages = [ pkgs.home-manager ];
+        }
+        // (
+          if isNixos then
+            {
+              isNormalUser = true;
+              extraGroups = [ "wheel" ];
+              createHome = true;
+            }
+          else
+            { }
+        );
+    };
+
+  home-managerModule = false;
+
+  homeConfig =
+    { isDarwin, home-manager, ... }:
+    {
+      home-manager.users.${username} = {
+        home = {
+          inherit username;
+          homeDirectory = if isDarwin then "/Users/${username}" else "${home}/${username}";
+          stateVersion = "24.05";
+        };
+        programs.home-manager.enable = true;
+        programs.zsh.enable = true;
+      };
+    };
 }

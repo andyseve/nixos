@@ -1,34 +1,31 @@
 {
   config,
-  options,
+  hostConfig,
+  isNixos,
   lib,
-  pkgs,
   ...
 }:
 
-with lib;
 let
-  modules = config.modules;
-  cfg = modules.desktop.dm;
-in {
-  options.modules.desktop.dm = {
+  inherit (lib) mkIf mkMerge;
+  cfg = hostConfig.desktop.dm or { };
+in
+{
+  config =
+    if isNixos then
+      (mkMerge [
 
-    lightdm.enable = mkOption {
-      description = "Enable lightdm";
-      type = types.bool;
-      default = false;
-      example = true;
-    };
+        (mkIf (cfg.lightdm.enable or false) {
+          assertions = [
+            { assertion = hostConfig.desktop.enable; }
+            { assertion = hostConfig.desktop.xserver.enable; }
+          ];
+          services.xserver.displayManager = {
+            lightdm.enable = true;
+          };
+        })
 
-  };
-
-  config = mkMerge [
-
-    ( mkIf cfg.lightdm.enable {
-      services.xserver.displayManager = {
-        lightdm.enable = true;
-      };
-    })
-
-  ];
+      ])
+    else
+      { };
 }
