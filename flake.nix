@@ -12,20 +12,20 @@
     ...
   }: let
     stateVersion = 23.11;
-    nixpkgs = builtins.getFlake "github:nixos/nixpkgs/nixos-23.11";
-    pkgs = import nixpkgs {
-      system = "x86_64-linux";
-      config.allowUnfree = true;
-      overlays = [
-        (final: prev: {
-          unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        })
-      ];
-    };
-    geralt = import ./hosts/geralt.nix {lib = nixpkgs-unstable.lib; config = nixpkgs-unstable.config; pkgs = pkgs;};
+    # nixpkgs = builtins.getFlake "github:nixos/nixpkgs/nixos-23.11";
+    # pkgs = import nixpkgs {
+    #   system = "x86_64-linux";
+    #   config.allowUnfree = true;
+    #   overlays = [
+    #     (final: prev: {
+    #       unstable = import nixpkgs-unstable {
+    #         system = "x86_64-linux";
+    #         config.allowUnfree = true;
+    #       };
+    #     })
+    #   ];
+    # };
+    geralt = import ./hosts/geralt.nix {lib = nixpkgs-unstable.lib; config = nixpkgs-unstable.config;};
   in rec {
     lib = nixpkgs-unstable.lib.extend (final: prev: {
       myutils = import ./lib {lib = final;};

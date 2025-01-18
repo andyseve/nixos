@@ -5,9 +5,8 @@
 # Host config and custom settings for geralt.
 
 { 
-  config,
   lib,
-  pkgs,
+  config,
   ...
 }: {
   modules = {
