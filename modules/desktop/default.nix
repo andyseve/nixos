@@ -31,9 +31,9 @@ in
             pkgs.vscode
           ]
           ++ [
-						upkgs.discord
-						upkgs.zoom-us
-					];
+            upkgs.discord
+            upkgs.zoom-us
+          ];
       })
 
       # ( mkIf (cfg.enable or false) {

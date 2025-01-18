@@ -38,6 +38,6 @@ in
   '';
 
   system.activationScripts.extraActivation.text = lib.mkAfter ''
-    	softwareupdate --install-rosetta --agree-to-license
+    softwareupdate --install-rosetta --agree-to-license
   '';
 }

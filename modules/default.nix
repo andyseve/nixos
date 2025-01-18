@@ -7,8 +7,8 @@
 {
   # Basic Nix configuration
   nix = {
-		# remove channel
-		channel.enable = false;
+    # remove channel
+    channel.enable = false;
 
     # build related settings
     settings = {

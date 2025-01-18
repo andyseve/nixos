@@ -1,7 +1,6 @@
 {
   config,
   isDarwin,
-  lib,
   nix-homebrew,
   ...
 }:

@@ -2,10 +2,8 @@
   stdenv,
   fetchurl,
   undmg,
-}: let
-	versionHashes = {
-	};
-in stdenv.mkDerivation rec {
+}:
+stdenv.mkDerivation rec {
   pname = "Firefox";
   version = "132.0";
 
