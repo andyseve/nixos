@@ -33,29 +33,29 @@ rec {
           };
         };
       darwinDefault =
-        { lib, ... }:
+        { ... }:
         {
-        #  imports = [
-        #    ./darwin/activation_scripts.nix
-        #    ./darwin/launchd.nix
-        #  ];
+          #  imports = [
+          #    ./darwin/activation_scripts.nix
+          #    ./darwin/launchd.nix
+          #  ];
           # https://github.com/DeterminateSystems/determinate/blob/main/flake.nix
           # Settings specified in Determinate Systems flake.
           # Have to copy paste because no flakehub.
           # This is the important bit - force services.nix-daemon.enable = false;
-        #  services.nix-daemon.enable = lib.mkForce false;
+          #  services.nix-daemon.enable = lib.mkForce false;
 
           # nix settings
-        #  nix = {
-        #    useDaemon = lib.mkForce true;
-        #    settings = {
-        #      netrc-file = lib.mkForce "/nix/var/determinate/netrc";
-              # Post build hook is included in the default nix.conf created by determinate.
-              # Effects of post-build-hook are unclear.	
-              # post-build-hook = lib.mkForce "/nix/var/determinate/post-build-hook.sh";
-              # upgrade-nix-store-path-url = lib.mkForce "https://install.determinate.systems/nix-upgrade/stable/universal";
-        #    };
-        #  };
+          #  nix = {
+          #    useDaemon = lib.mkForce true;
+          #    settings = {
+          #      netrc-file = lib.mkForce "/nix/var/determinate/netrc";
+          # Post build hook is included in the default nix.conf created by determinate.
+          # Effects of post-build-hook are unclear.
+          # post-build-hook = lib.mkForce "/nix/var/determinate/post-build-hook.sh";
+          # upgrade-nix-store-path-url = lib.mkForce "https://install.determinate.systems/nix-upgrade/stable/universal";
+          #    };
+          #  };
         };
 
       wslConfig =
@@ -115,7 +115,7 @@ rec {
             [
               inputs.nix-homebrew.darwinModules.nix-homebrew
               inputs.home-manager.darwinModules.home-manager
-	      inputs.lix.nixosModules.default
+              inputs.lix.nixosModules.default
               darwinDefault
               homeDefault
               hostConfig.darwinConfig

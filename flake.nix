@@ -12,10 +12,8 @@
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # use lix
-    lix = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-2.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    lix.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-2.tar.gz";
+    lix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Controls system level settings for MacOS
     darwin.url = "github:lnl7/nix-darwin/nix-darwin-24.11";
