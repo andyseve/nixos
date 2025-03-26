@@ -11,14 +11,14 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # fetch and install latest determinate installer
-    determinate-nixd-aarch64-darwin = {
-      url = "https://install.determinate.systems/determinate-nixd/rev/51ecec5a3148baef87c2015536aa12dd18e4c4ad/macOS";
-      flake = false;
+    # use lix
+    lix = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-2.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Controls system level settings for MacOS
-    darwin.url = "github:lnl7/nix-darwin";
+    darwin.url = "github:lnl7/nix-darwin/nix-darwin-24.11";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # Controls homebrew installation
@@ -31,7 +31,7 @@
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
     # Manages configs and home directory
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # HYPRLAND desktop manager for wayland

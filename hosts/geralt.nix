@@ -48,7 +48,7 @@ rec {
       boot.kernelModules = [ "kvm-intel" ];
       boot.extraModulePackages = [ ];
 
-      time.timeZone = "America/New_York";
+      #time.timeZone = "America/New_York";
       time.hardwareClockInLocalTime = true;
       services.localtimed.enable = true;
 

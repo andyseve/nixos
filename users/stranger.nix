@@ -41,7 +41,7 @@ rec {
         home = {
           inherit username;
           homeDirectory = if isDarwin then "/Users/${username}" else "${home}/${username}";
-          stateVersion = "24.05";
+          stateVersion = "24.11";
         };
         programs.home-manager.enable = true;
         programs.zsh.enable = true;
