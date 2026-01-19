@@ -11,21 +11,12 @@ let
 in
 {
   config = mkIf (cfg.enable or true) {
-    fonts = {
-      packages =
-        with pkgs;
-        mkMerge [
-          [
-            (nerdfonts.override {
-              fonts = [
-                "FiraCode"
-                "FiraMono"
-                "CascadiaCode"
-              ];
-            })
-          ]
-          (mkIf (cfg.marathi or true) [ lohit-fonts.marathi ])
-        ];
-    };
+    fonts.packages = mkMerge [
+      [
+        pkgs.nerd-fonts.fira-code
+	pkgs.nerd-fonts.caskaydia-cove
+      ]
+      (mkIf (cfg.marathi or true) [ pkgs.lohit-fonts.marathi ])
+    ];
   };
 }

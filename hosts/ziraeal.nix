@@ -42,6 +42,7 @@ rec {
         pkgs.bashInteractive
         pkgs.zsh
       ];
+      system.primaryUser = "stranger";
       system.defaults = {
         finder.AppleShowAllExtensions = true;
         NSGlobalDomain = {

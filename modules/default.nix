@@ -74,5 +74,5 @@
 
   # enable nix daemon on apple
   # system settings
-  system.stateVersion = (if isDarwin then 5 else "24.11");
+  system.stateVersion = (if isDarwin then 5 else "25.11");
 }

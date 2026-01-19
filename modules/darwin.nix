@@ -17,6 +17,7 @@
         };
         homebrew = {
           enable = true;
+	  user = "stranger";
           caskArgs.no_quarantine = true;
           onActivation = {
             autoUpdate = false;
@@ -24,7 +25,7 @@
             cleanup = "uninstall"; # should maybe be "zap" - remove anything not listed here
           };
           global = {
-            brewfile = true;
+            brewfile = false;
             autoUpdate = false;
           };
           masApps = {
@@ -33,7 +34,6 @@
             "Microsoft Word" = 462054704;
             "Microsoft PowerPoint" = 462062816;
             "Microsoft OneNote" = 784801555;
-            "Slack" = 803453959;
             "Xcode" = 497799835;
             # "GlobalProtect" = 1400555706;
           };

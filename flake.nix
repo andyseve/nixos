@@ -8,7 +8,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # use lix
@@ -16,7 +16,7 @@
     lix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Controls system level settings for MacOS
-    darwin.url = "github:lnl7/nix-darwin/nix-darwin-24.11";
+    darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.11";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # Controls homebrew installation
@@ -29,7 +29,7 @@
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
     # Manages configs and home directory
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # HYPRLAND desktop manager for wayland

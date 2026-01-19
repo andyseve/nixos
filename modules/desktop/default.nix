@@ -28,7 +28,9 @@ in
             pkgs.kitty
           ]
           ++ [
-            pkgs.vscode
+	    pkgs.code-cursor
+	    pkgs.claude-code
+	    pkgs.codex
           ]
           ++ [
             upkgs.discord
