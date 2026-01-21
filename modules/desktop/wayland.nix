@@ -1,4 +1,4 @@
-{ options, lib, ... }:
+{ lib, ... }:
 
 with lib;
 {

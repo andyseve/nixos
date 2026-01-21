@@ -1,6 +1,5 @@
 # security settings
 {
-  config,
   isDarwin,
   lib,
   ...

@@ -1,9 +1,12 @@
 {
-  config,
+  lib,
   isDarwin,
-  nix-homebrew,
   ...
 }:
+let
+  # MAS installs can hang without an App Store session; gate with env.
+  manageMasApps = builtins.getEnv "MANAGE_MAS_APPS" == "1";
+in
 {
   config =
     if isDarwin then
@@ -17,7 +20,7 @@
         };
         homebrew = {
           enable = true;
-	  user = "stranger";
+          user = "stranger";
           caskArgs.no_quarantine = true;
           onActivation = {
             autoUpdate = false;
@@ -28,7 +31,7 @@
             brewfile = false;
             autoUpdate = false;
           };
-          masApps = {
+          masApps = lib.mkIf manageMasApps {
             "Keynote" = 409183694;
             "Microsoft Excel" = 462058435;
             "Microsoft Word" = 462054704;

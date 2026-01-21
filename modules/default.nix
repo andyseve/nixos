@@ -1,6 +1,5 @@
 {
   isDarwin,
-  options,
   pkgs,
   ...
 }:
@@ -41,23 +40,22 @@
     optimise.automatic = true; # auto-optimize the store
 
     # Garbage Collector
-    gc =
-      {
-        automatic = true;
-        options = "--delete-older-than 30d";
-      }
-      // (
-        if isDarwin then
-          {
-            interval = {
-              Weekday = 0;
-              Hour = 2;
-              Minute = 0;
-            };
-          }
-        else
-          { dates = "weekly"; }
-      );
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    }
+    // (
+      if isDarwin then
+        {
+          interval = {
+            Weekday = 0;
+            Hour = 2;
+            Minute = 0;
+          };
+        }
+      else
+        { dates = "weekly"; }
+    );
   };
 
   environment.systemPackages = [

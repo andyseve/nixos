@@ -13,29 +13,28 @@ rec {
       ...
     }:
     {
-      users.users.${username} =
-        {
-          description = name;
-          shell = "${pkgs.${shell}}/bin/${shell}";
-          home = if isDarwin then "/Users/${username}" else "${home}/${username}";
-          packages = [ pkgs.home-manager ];
-        }
-        // (
-          if isNixos then
-            {
-              isNormalUser = true;
-              extraGroups = [ "wheel" ];
-              createHome = true;
-            }
-          else
-            { }
-        );
+      users.users.${username} = {
+        description = name;
+        shell = "${pkgs.${shell}}/bin/${shell}";
+        home = if isDarwin then "/Users/${username}" else "${home}/${username}";
+        packages = [ pkgs.home-manager ];
+      }
+      // (
+        if isNixos then
+          {
+            isNormalUser = true;
+            extraGroups = [ "wheel" ];
+            createHome = true;
+          }
+        else
+          { }
+      );
     };
 
   home-managerModule = false;
 
   homeConfig =
-    { isDarwin, home-manager, ... }:
+    { isDarwin, ... }:
     {
       home-manager.users.${username} = {
         home = {

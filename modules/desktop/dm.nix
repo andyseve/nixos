@@ -1,5 +1,4 @@
 {
-  config,
   hostConfig,
   isNixos,
   lib,

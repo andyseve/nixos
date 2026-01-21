@@ -78,16 +78,15 @@ rec {
             isDarwin = false;
             isNixos = false;
           };
-          modules =
-            [
-              inputs.nixos-wsl.nixosModules.default
-              wslDefault
-              inputs.home-manager.nixosModules.home-manager
-              homeDefault
-              hostConfig.wslConfig
-            ]
-            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-            ++ (listModules' (toString ../modules));
+          modules = [
+            inputs.nixos-wsl.nixosModules.default
+            wslDefault
+            inputs.home-manager.nixosModules.home-manager
+            homeDefault
+            hostConfig.wslConfig
+          ]
+          ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+          ++ (listModules' (toString ../modules));
         };
 
       darwinConfig =
@@ -111,17 +110,16 @@ rec {
             isDarwin = true;
             isNixos = false;
           };
-          modules =
-            [
-              inputs.nix-homebrew.darwinModules.nix-homebrew
-              inputs.home-manager.darwinModules.home-manager
-              inputs.lix.nixosModules.default
-              darwinDefault
-              homeDefault
-              hostConfig.darwinConfig
-            ]
-            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-            ++ (listModules' (toString ../modules));
+          modules = [
+            inputs.nix-homebrew.darwinModules.nix-homebrew
+            inputs.home-manager.darwinModules.home-manager
+            inputs.lix.nixosModules.default
+            darwinDefault
+            homeDefault
+            hostConfig.darwinConfig
+          ]
+          ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+          ++ (listModules' (toString ../modules));
         };
 
       nixosConfig =
@@ -144,14 +142,13 @@ rec {
             isDarwin = false;
             isNixos = true;
           };
-          modules =
-            [
-              inputs.home-manager.nixosModules.home-manager
-              homeDefault
-              hostConfig.nixosConfig
-            ]
-            ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
-            ++ (listModules' (toString ../modules));
+          modules = [
+            inputs.home-manager.nixosModules.home-manager
+            homeDefault
+            hostConfig.nixosConfig
+          ]
+          ++ (lib.flatten (builtins.map (mkUser hostConfig) hostConfig.users))
+          ++ (listModules' (toString ../modules));
         };
     in
     { }

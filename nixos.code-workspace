@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "nixos",
+      "path": "."
+    },
+    {
+      "name": "home-manager",
+      "path": "../home-manager"
+    }
+  ],
+  "settings": {
+    "files.readonlyExclude": {
+      "./**": true,
+      "../home-manager/**": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "jnoortheen.nix-ide",
+    ]
+}
+

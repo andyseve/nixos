@@ -15,23 +15,22 @@
           ...
         }:
         {
-          users.users.${userConfig.username} =
-            {
-              description = userConfig.name;
-              shell = pkgs.${userConfig.shell};
-              home =
-                if isDarwin then "/Users/${userConfig.username}" else "${userConfig.home}/${userConfig.username}";
-              packages = [ pkgs.home-manager ];
-            }
-            // (
-              if isNixos then
-                {
-                  isNormalUser = true;
-                  extraGroups = [ "wheel" ];
-                }
-              else
-                { }
-            );
+          users.users.${userConfig.username} = {
+            description = userConfig.name;
+            shell = pkgs.${userConfig.shell};
+            home =
+              if isDarwin then "/Users/${userConfig.username}" else "${userConfig.home}/${userConfig.username}";
+            packages = [ pkgs.home-manager ];
+          }
+          // (
+            if isNixos then
+              {
+                isNormalUser = true;
+                extraGroups = [ "wheel" ];
+              }
+            else
+              { }
+          );
         };
     in
     [

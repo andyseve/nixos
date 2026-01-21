@@ -31,7 +31,7 @@ rec {
   users = [ "stranger" ];
 
   nixosConfig =
-    { options, ... }:
+    { ... }:
     {
       # Basic hardware configuration like disks, timezones, networking etc.
       # Only used when natively running on nixos

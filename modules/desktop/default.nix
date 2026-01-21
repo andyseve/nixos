@@ -1,5 +1,4 @@
 {
-  config,
   hostConfig,
   isDarwin,
   lib,
@@ -20,22 +19,21 @@ in
         # modules.desktop.wm.${cfg.wm.default}.enable = true;
         # modules.desktop.dm.${cfg.dm.default}.enable = true;
 
-        environment.systemPackages =
-          [
-            (if isDarwin then (pkgs.callPackage ../../pkgs/firefox.nix { }) else pkgs.firefox)
-            (if isDarwin then pkgs.vlc-bin else pkgs.vlc)
-            pkgs.zathura
-            pkgs.kitty
-          ]
-          ++ [
-	    pkgs.code-cursor
-	    pkgs.claude-code
-	    pkgs.codex
-          ]
-          ++ [
-            upkgs.discord
-            upkgs.zoom-us
-          ];
+        environment.systemPackages = [
+          (if isDarwin then (pkgs.callPackage ../../pkgs/firefox.nix { }) else pkgs.firefox)
+          (if isDarwin then pkgs.vlc-bin else pkgs.vlc)
+          pkgs.zathura
+          pkgs.kitty
+        ]
+        ++ [
+          pkgs.code-cursor
+          pkgs.claude-code
+          pkgs.codex
+        ]
+        ++ [
+          upkgs.discord
+          upkgs.zoom-us
+        ];
       })
 
       # ( mkIf (cfg.enable or false) {

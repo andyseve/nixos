@@ -1,5 +1,4 @@
 {
-  config,
   hostConfig,
   lib,
   pkgs,
@@ -13,6 +12,7 @@ in
 {
   config = mkIf (cfg.enable or false) {
     programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true; # integrate direnv with nix flakes
     environment.systemPackages = [ pkgs.direnv ];
   };
 }

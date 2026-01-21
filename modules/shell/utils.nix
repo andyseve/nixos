@@ -1,5 +1,4 @@
 {
-  config,
   hostConfig,
   isDarwin,
   lib,
@@ -13,47 +12,48 @@ in
 {
   config = mkMerge [
     (mkIf (cfg.utils.enable or false) {
-      environment.systemPackages =
-        [ pkgs.git ] # Version Control
-        ++ [
-          pkgs.zip
-          pkgs.unzip
-        ] # archieves
-        ++ [
-          pkgs.btop
-          pkgs.pciutils
-        ]
-        ++ (
-          if !isDarwin then
-            [
-              pkgs.usbutils
-              pkgs.iputils
-            ]
-          else
-            [ ]
-        ) # monitoring tools
-        ++ [
-          pkgs.bat
-          pkgs.tree
-          pkgs.ranger
-          pkgs.eza
-        ] # file tools
-        ++ [
-          pkgs.wget
-          pkgs.curl
-          pkgs.rsync
-        ]
-        ++ [
-          pkgs.fzf
-          pkgs.ripgrep
-          pkgs.autojump
-          pkgs.silver-searcher
-        ] # search tools
-        ++ [
-          pkgs.tmux
-          pkgs.screen
-        ]
-        ++ [ pkgs.neovim ];
+      environment.systemPackages = [
+        pkgs.git
+      ] # Version Control
+      ++ [
+        pkgs.zip
+        pkgs.unzip
+      ] # archieves
+      ++ [
+        pkgs.btop
+        pkgs.pciutils
+      ]
+      ++ (
+        if !isDarwin then
+          [
+            pkgs.usbutils
+            pkgs.iputils
+          ]
+        else
+          [ ]
+      ) # monitoring tools
+      ++ [
+        pkgs.bat
+        pkgs.tree
+        pkgs.ranger
+        pkgs.eza
+      ] # file tools
+      ++ [
+        pkgs.wget
+        pkgs.curl
+        pkgs.rsync
+      ]
+      ++ [
+        pkgs.fzf
+        pkgs.ripgrep
+        pkgs.autojump
+        pkgs.silver-searcher
+      ] # search tools
+      ++ [
+        pkgs.tmux
+        pkgs.screen
+      ]
+      ++ [ pkgs.neovim ];
 
     })
 
@@ -68,6 +68,8 @@ in
     (mkIf (cfg.code.python.enable or false) {
       environment.systemPackages = [
         pkgs.python3
+        pkgs.uv
+        pkgs.ruff
         # pkgs.python3Packages.numpy
         # pkgs.python3Packages.scipy
         # pkgs.python3Packages.torch
