@@ -132,8 +132,11 @@ rec {
 
       # power actions
       services.logind = {
-        killUserProcesses = false;
-        extraConfig = "IdleAction=suspend\nIdleActionSec=300\n";
+        settings.Login = {
+          KillUserProcesses = false;
+          IdleAction = "suspend";
+          IdleActionSec = "300";
+        };
       };
 
       security.sudo.enable = true;

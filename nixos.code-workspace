@@ -18,6 +18,7 @@
   "extensions": {
     "recommendations": [
       "jnoortheen.nix-ide",
+      "eamodio.gitlens",
     ]
 }
 

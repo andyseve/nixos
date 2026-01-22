@@ -3,6 +3,7 @@
 rec {
   system = "x86_64-linux";
   nixos = true;
+  unfree = true;
   hardware = {
     audio.enable = true;
   };
@@ -28,6 +29,8 @@ rec {
       # Basic hardware configuration like disks, timezones, networking etc.
       # Only used when natively running on nixos
       # Boot settings
+      boot.loader.systemd-boot.enable = true;
+      boot.loader.efi.canTouchEfiVariables = true;
       boot.initrd.availableKernelModules = [
         "xhci_pci"
         "ahci"
@@ -87,10 +90,12 @@ rec {
 
       # Power actions
       services.logind = {
-        killUserProcesses = false;
-        lidSwitch = "hibernate";
-        lidSwitchExternalPower = "ignore";
-        lidSwitchDocked = "ignore";
+        settings.Login = {
+          KillUserProcesses = false;
+          HandleLidSwitch = "hibernate";
+          HandleLidSwitchExternalPower = "ignore";
+          HandleLidSwitchDocked = "ignore";
+        };
       };
 
       # This value determines the NixOS release with which your system is to be

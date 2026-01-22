@@ -18,7 +18,6 @@ rec {
         { ... }:
         {
           wsl.enable = true;
-          wsl.nativeSystemd = true;
         };
       homeDefault =
         { ... }:
@@ -152,9 +151,9 @@ rec {
         };
     in
     { }
-    // (if hostConfig ? wsl && hostConfig.wsl then { wslConfig = wslConfig; } else { })
-    // (if hostConfig ? darwin && hostConfig.darwin then { darwinConfig = darwinConfig; } else { })
-    // (if hostConfig ? nixos && hostConfig.nixos then { nixosConfig = nixosConfig; } else { });
+    // (if hostConfig ? wslConfig then { wslConfig = wslConfig; } else { })
+    // (if hostConfig ? darwinConfig then { darwinConfig = darwinConfig; } else { })
+    // (if hostConfig ? nixosConfig then { nixosConfig = nixosConfig; } else { });
 
   mkHostNixos =
     inputs: acc: hostname: configs:
