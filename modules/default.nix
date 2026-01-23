@@ -73,4 +73,11 @@
   # enable nix daemon on apple
   # system settings
   system.stateVersion = (if isDarwin then 5 else "25.11");
+
+  # Enable remote editor servers on NixOS/WSL to support VS Code and Cursor Remote connections.
+  # Guarded to avoid unknown option errors on macOS.
+  services = if isDarwin then { } else {
+    vscode-server.enable = true;
+    cursor-server.enable = true;
+  };
 }

@@ -28,6 +28,12 @@
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
+    # VS Code and Cursor servers
+    nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-cursor-server.url = "github:zoid-archive/nixos-cursor-server";
+    nixos-cursor-server.inputs.nixpkgs.follows = "nixpkgs";
+
     # Manages configs and home directory
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
