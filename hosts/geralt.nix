@@ -5,8 +5,7 @@ rec {
   nixos = true;
   unfree = true;
   hardware = {
-    # nvidia.enable = true;
-    # nvidia.type = "stable";
+    nvidia.enable = true;
     audio.enable = true;
     logitech.enable = true;
   };
