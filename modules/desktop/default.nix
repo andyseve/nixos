@@ -1,6 +1,7 @@
 {
   hostConfig,
   isDarwin,
+  isWSL,
   lib,
   pkgs,
   upkgs,
@@ -15,7 +16,7 @@ in
   config = (
     mkMerge [
 
-      (mkIf (cfg.enable or false) {
+      (mkIf ((cfg.enable or false) && (!isWSL)) {
         # modules.desktop.wm.${cfg.wm.default}.enable = true;
         # modules.desktop.dm.${cfg.dm.default}.enable = true;
 
@@ -27,8 +28,6 @@ in
         ]
         ++ [
           pkgs.code-cursor
-          pkgs.claude-code
-          pkgs.codex
         ]
         ++ [
           upkgs.discord

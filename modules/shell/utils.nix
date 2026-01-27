@@ -53,7 +53,13 @@ in
         pkgs.tmux
         pkgs.screen
       ]
-      ++ [ pkgs.neovim ];
+      ++ [
+        pkgs.neovim
+      ]
+      ++ [
+        pkgs.claude-code
+        pkgs.codex
+      ];
 
     })
 

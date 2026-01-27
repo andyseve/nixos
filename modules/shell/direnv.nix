@@ -11,8 +11,13 @@ let
 in
 {
   config = mkIf (cfg.enable or false) {
-    programs.direnv.enable = true;
-    programs.direnv.nix-direnv.enable = true; # integrate direnv with nix flakes
+    programs.direnv = {
+      enable = true;
+      nix-direnv = {
+        enable = true; # integrate direnv with nix flakes and keep GC roots
+        package = pkgs.nix-direnv;
+      };
+    };
     environment.systemPackages = [ pkgs.direnv ];
   };
 }
