@@ -34,6 +34,10 @@
         "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
+      trusted-users = [
+        "root"
+        "stranger"
+      ];
       accept-flake-config = true;
     };
 
@@ -76,8 +80,12 @@
 
   # Enable remote editor servers on NixOS/WSL to support VS Code and Cursor Remote connections.
   # Guarded to avoid unknown option errors on macOS.
-  services = if isDarwin then { } else {
-    vscode-server.enable = true;
-    cursor-server.enable = true;
-  };
+  services =
+    if isDarwin then
+      { }
+    else
+      {
+        vscode-server.enable = true;
+        cursor-server.enable = true;
+      };
 }
