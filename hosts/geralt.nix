@@ -14,6 +14,7 @@ rec {
   shell = {
     direnv.enable = true;
     utils.enable = true;
+    docker.enable = true;
     code.cpp.enable = true;
     code.python.enable = true;
     code.haskell.enable = false;
