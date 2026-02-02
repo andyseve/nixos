@@ -26,6 +26,14 @@ rec {
             extraGroups = [ "wheel" ];
             createHome = true;
           }
+          else
+          { }
+      )
+      // (
+        if hostConfig.shell.docker.enable then
+          {
+            extraGroups = [ "docker" ];
+          }
         else
           { }
       );
