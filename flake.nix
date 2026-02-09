@@ -21,8 +21,6 @@
 
     # Controls homebrew installation
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
-    nix-homebrew.inputs.nix-darwin.follows = "darwin";
 
     # Modules for wsl
     nixos-wsl.url = "github:nix-community/nixos-wsl";

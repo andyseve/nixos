@@ -10,6 +10,7 @@ rec {
       pkgs,
       isDarwin,
       isNixos,
+      hostConfig,
       ...
     }:
     {
@@ -30,7 +31,7 @@ rec {
           { }
       )
       // (
-        if hostConfig.shell.docker.enable then
+        if (hostConfig.shell.docker.enable or false) then
           {
             extraGroups = [ "docker" ];
           }

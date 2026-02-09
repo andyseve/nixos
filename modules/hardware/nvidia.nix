@@ -12,9 +12,9 @@ let
     && hostConfig.hardware ? nvidia
     && (hostConfig.hardware.nvidia.enable or false);
 in
-{
+lib.optionalAttrs (!isDarwin) {
   config = lib.mkMerge [
-    (lib.mkIf (nvidiaEnabled && !isDarwin) {
+    (lib.mkIf nvidiaEnabled {
       environment.systemPackages = [
         pkgs.cudaPackages.cudatoolkit
         pkgs.cudaPackages.cudnn
