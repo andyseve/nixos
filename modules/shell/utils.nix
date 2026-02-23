@@ -3,6 +3,7 @@
   isDarwin,
   lib,
   pkgs,
+  upkgs,
   ...
 }:
 let
@@ -56,8 +57,8 @@ in
       pkgs.neovim
     ]
     ++ [
-      pkgs.claude-code
-      pkgs.codex
+      upkgs.claude-code
+      upkgs.codex
     ];
   };
 }
