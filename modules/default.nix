@@ -85,7 +85,7 @@
       { }
     else
       {
-        vscode-server.enable = true;
-        cursor-server.enable = true;
+        # vscode-server.enable = true;
+        # cursor-server.enable = true;
       };
 }
