@@ -79,8 +79,6 @@ rec {
           };
           modules = [
             inputs.nixos-wsl.nixosModules.default
-            # inputs.nixos-vscode-server.nixosModules.default
-            # inputs.nixos-cursor-server.nixosModules.default
             wslDefault
             inputs.home-manager.nixosModules.home-manager
             homeDefault
@@ -145,8 +143,6 @@ rec {
           };
           modules = [
             inputs.home-manager.nixosModules.home-manager
-            # inputs.nixos-vscode-server.nixosModules.default
-            # inputs.nixos-cursor-server.nixosModules.default
             homeDefault
             hostConfig.nixosConfig
           ]

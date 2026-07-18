@@ -21,14 +21,6 @@ lib.optionalAttrs (!isDarwin) {
       ];
     })
     (lib.mkIf (isWSL && nvidiaEnabled) {
-      # Allow running WSL-provided dynamically linked NVIDIA tools like nvidia-smi.
-      programs.nix-ld = {
-        enable = true;
-        libraries = [
-          pkgs.stdenv.cc.cc.lib
-        ];
-      };
-
       # WSL-specific NVIDIA env to make CUDA tools happier.
       environment.sessionVariables = {
         CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";

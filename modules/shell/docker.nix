@@ -11,7 +11,10 @@ let
 in
 lib.optionalAttrs (!isDarwin) {
   config = mkIf (cfg.docker.enable or false) {
-    virtualisation.docker.enable = true;
+    virtualisation.docker = {
+      enable = true;
+      package = pkgs.docker_29;
+    };
     environment.systemPackages = [
       pkgs.docker-compose
     ];
