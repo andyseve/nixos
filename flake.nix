@@ -12,7 +12,7 @@
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # use lix
-    lix.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-2.tar.gz";
+    lix.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=stable";
     lix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Controls system level settings for MacOS

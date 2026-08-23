@@ -21,13 +21,14 @@ in
         # modules.desktop.dm.${cfg.dm.default}.enable = true;
 
         environment.systemPackages = [
-          (if isDarwin then upkgs.firefox else pkgs.firefox)
+          pkgs.firefox
           (if isDarwin then pkgs.vlc-bin else pkgs.vlc)
           pkgs.zathura
           pkgs.kitty
         ]
         ++ [
           upkgs.code-cursor
+          upkgs.vscode
         ]
         ++ [
           upkgs.discord
