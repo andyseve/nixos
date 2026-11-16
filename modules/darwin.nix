@@ -25,7 +25,11 @@ in
           onActivation = {
             autoUpdate = false;
             upgrade = true;
-            cleanup = "uninstall"; # should maybe be "zap" - remove anything not listed here
+            cleanup = "none";
+            extraFlags = [
+              "--force-cleanup"
+              "--zap"
+            ];
           };
           global = {
             brewfile = false;
