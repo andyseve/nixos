@@ -14,6 +14,7 @@ in
   config = mkIf (cfg.utils.enable or false) {
     environment.systemPackages = [
       pkgs.git
+      pkgs.gh
     ] # Version Control
     ++ [
       pkgs.zip

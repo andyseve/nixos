@@ -21,7 +21,7 @@ in
         # modules.desktop.dm.${cfg.dm.default}.enable = true;
 
         environment.systemPackages = [
-          pkgs.firefox
+          (if isDarwin then pkgs.firefox-bin-unwrapped else pkgs.firefox)
           (if isDarwin then pkgs.vlc-bin else pkgs.vlc)
           pkgs.zathura
           pkgs.kitty
